@@ -7,6 +7,7 @@ export default function Envelope({ children, names, isOpen, onOpen, soundEnabled
   const confettiCanvasRef = useRef(null);
   const burstTimerRef = useRef(null);
   const cleanupTimerRef = useRef(null);
+  const audioRef = useRef(null);
 
   const clearCelebration = () => {
     if (burstTimerRef.current) {
@@ -25,6 +26,13 @@ export default function Envelope({ children, names, isOpen, onOpen, soundEnabled
     confettiInstanceRef.current = null;
   };
 
+  const clearAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+    }
+  };
+
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (mediaQuery.matches) {
@@ -40,7 +48,10 @@ export default function Envelope({ children, names, isOpen, onOpen, soundEnabled
   }, [onOpen]);
 
   useEffect(() => {
-    return () => clearCelebration();
+    return () => {
+      clearCelebration();
+      clearAudio();
+    };
   }, []);
 
   const initials = useMemo(() => {
@@ -53,43 +64,22 @@ export default function Envelope({ children, names, isOpen, onOpen, soundEnabled
     if (!soundEnabled) return;
 
     const tryPlayAsset = () => {
-      const audio = new Audio('/sounds/celebration-clapping.opus');
+      const url = `${import.meta.env.BASE_URL}sounds/wedding-audio.opus`;
+      clearAudio();
+      const audio = new Audio(url);
       audio.volume = 0.5;
+      audio.preload = 'auto';
+      audioRef.current = audio;
+      audio.addEventListener('ended', () => {
+        if (audioRef.current === audio) {
+          audioRef.current = null;
+        }
+      }, { once: true });
       audio.play().catch(() => {
-        playGeneratedClaps();
+        if (audioRef.current === audio) {
+          audioRef.current = null;
+        }
       });
-    };
-
-    const playGeneratedClaps = () => {
-      const AudioContextCtor = window.AudioContext || window.webkitAudioContext;
-      if (!AudioContextCtor) return;
-
-      const context = new AudioContextCtor();
-      context.resume().catch(() => {});
-
-      const masterGain = context.createGain();
-      masterGain.gain.setValueAtTime(0.0001, context.currentTime);
-      masterGain.gain.exponentialRampToValueAtTime(0.09, context.currentTime + 0.02);
-      masterGain.connect(context.destination);
-
-      const clapPattern = [0.00, 0.16, 0.32, 0.48, 0.64, 0.82];
-      clapPattern.forEach((delay, index) => {
-        const oscillator = context.createOscillator();
-        const noiseGain = context.createGain();
-        oscillator.type = index % 2 === 0 ? 'square' : 'sine';
-        oscillator.frequency.setValueAtTime(index % 2 === 0 ? 720 : 980, context.currentTime + delay);
-        oscillator.connect(noiseGain);
-        noiseGain.gain.setValueAtTime(0.0001, context.currentTime + delay);
-        noiseGain.gain.exponentialRampToValueAtTime(0.05, context.currentTime + delay + 0.01);
-        noiseGain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + delay + 0.12);
-        noiseGain.connect(masterGain);
-        oscillator.start(context.currentTime + delay);
-        oscillator.stop(context.currentTime + delay + 0.14);
-      });
-
-      const stopTime = context.currentTime + 0.95;
-      masterGain.gain.setValueAtTime(masterGain.gain.value, stopTime);
-      masterGain.gain.exponentialRampToValueAtTime(0.0001, stopTime + 0.05);
     };
 
     tryPlayAsset();
