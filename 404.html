@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loading invitation…</title>
+    <script>
+      // Preserve the requested SPA route when GitHub Pages serves this file.
+      // This site is deployed as a project page, so one path segment is the
+      // repository name (for example, /wedding-invitation).
+      const repositorySegments = 1;
+      const locationParts = window.location;
+      const basePath = locationParts.pathname.split('/').slice(0, repositorySegments + 1).join('/');
+      const route = locationParts.pathname.split('/').slice(repositorySegments + 1).join('/');
+      window.location.replace(`${locationParts.protocol}//${locationParts.host}${basePath}/?/${route.replace(/&/g, '~and~')}${locationParts.search}${locationParts.hash}`);
+    </script>
+  </head>
+  <body></body>
+</html>
