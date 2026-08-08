@@ -54,6 +54,21 @@ export default function Envelope({ children, names, isOpen, onOpen, soundEnabled
     };
   }, []);
 
+  useEffect(() => {
+    if (soundEnabled) {
+      const audio = audioRef.current;
+      if (audio) {
+        // Resuming happens in response to the sound button's click, so browsers
+        // allow playback even after the invitation has already been opened.
+        audio.play().catch(() => {});
+      } else if (isOpen) {
+        playCelebrationSound();
+      }
+    } else {
+      audioRef.current?.pause();
+    }
+  }, [soundEnabled, isOpen]);
+
   const initials = useMemo(() => {
     const first = names?.split('&')[0]?.trim() || 'A';
     const last = names?.split('&')[1]?.trim() || 'B';
@@ -75,11 +90,10 @@ export default function Envelope({ children, names, isOpen, onOpen, soundEnabled
           audioRef.current = null;
         }
       }, { once: true });
-      audio.play().catch(() => {
-        if (audioRef.current === audio) {
-          audioRef.current = null;
-        }
-      });
+      // Keep the instance after an interrupted play request. Pausing while a
+      // play promise is pending rejects that promise, but the same audio can
+      // still be resumed by the sound button.
+      audio.play().catch(() => {});
     };
 
     tryPlayAsset();
@@ -218,8 +232,8 @@ export default function Envelope({ children, names, isOpen, onOpen, soundEnabled
           height: clamp(150px, 34vw, 200px);
           background: var(--ivory);
           border: 1px solid rgba(184,147,90,0.45);
-          border-radius: 0 0 1.2rem 1.2rem;
-          box-shadow: 0 20px 40px rgba(43,38,32,0.08);
+          border-radius: 0.15rem 0.15rem 1.2rem 1.2rem;
+          box-shadow: 0 26px 54px rgba(51,43,37,0.11);
           transform-style: preserve-3d;
           transition: transform 650ms cubic-bezier(.2,.8,.2,1), opacity 650ms ease;
         }
@@ -240,7 +254,7 @@ export default function Envelope({ children, names, isOpen, onOpen, soundEnabled
         .envelope-flap {
           position: absolute;
           inset: 0;
-          background: linear-gradient(180deg, rgba(122,139,111,0.16), rgba(122,139,111,0.05));
+          background: linear-gradient(180deg, rgba(105,120,101,0.2), rgba(105,120,101,0.045));
           clip-path: polygon(0 0, 100% 0, 50% 100%);
           transform-origin: top center;
           transition: transform 650ms cubic-bezier(.2,.8,.2,1);
@@ -252,7 +266,7 @@ export default function Envelope({ children, names, isOpen, onOpen, soundEnabled
           position: absolute;
           inset: 1.4rem 1rem 1rem;
           border: 1px solid rgba(184,147,90,0.3);
-          border-radius: 0 0 1rem 1rem;
+          border-radius: 0 0 0.8rem 0.8rem;
           display: grid;
           place-items: center;
         }
@@ -260,14 +274,14 @@ export default function Envelope({ children, names, isOpen, onOpen, soundEnabled
           width: clamp(50px, 12vw, 66px);
           height: clamp(50px, 12vw, 66px);
           border-radius: 50%;
-          background: var(--sage);
+          background: var(--sage-deep);
           color: var(--ivory);
           display: grid;
           place-items: center;
           font-family: 'Cormorant Garamond', serif;
           font-weight: 700;
           font-size: clamp(0.8rem, 2.5vw, 1.2rem);
-          box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.1);
+          box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 5px 12px rgba(51,43,37,0.15);
         }
         .invitation-card {
           position: absolute;
@@ -277,12 +291,12 @@ export default function Envelope({ children, names, isOpen, onOpen, soundEnabled
           justify-content: center;
           width: 100%;
           padding: clamp(1.25rem, 4vw, 2.5rem) clamp(1rem, 3vw, 1.5rem) clamp(1.75rem, 6vw, 2.5rem);
-          border-radius: 1.2rem;
-          background: rgba(255,255,255,0.78);
+          border-radius: var(--radius-soft);
+          background: rgba(255,253,249,0.9);
           opacity: 0;
           transform: scale(0.94);
           transition: opacity 500ms ease, transform 500ms ease;
-          box-shadow: 0 20px 45px rgba(43,38,32,0.08);
+          box-shadow: 0 25px 60px rgba(51,43,37,0.08);
           box-sizing: border-box;
           overflow: visible;
         }

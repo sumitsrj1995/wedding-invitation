@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 import Envelope from './components/Envelope';
 import Hero from './components/Hero';
 import EventDetails from './components/EventDetails';
@@ -7,23 +8,17 @@ import Schedule from './components/Schedule';
 import Gallery from './components/Gallery';
 import PresenceMessage from './components/DressCode';
 import Footer from './components/Footer';
-import { content } from './utils/content';
+import { defaultWeddingSlug, weddings } from './utils/content';
 
-export default function App() {
+function WeddingInvitation({ content }) {
   const sectionRefs = useRef([]);
   const [isEnvelopeOpen, setIsEnvelopeOpen] = useState(false);
-  const [soundEnabled, setSoundEnabled] = useState(() => {
-    if (typeof window === 'undefined') return true;
-    const storedValue = window.localStorage.getItem('celebration-sound');
-    return storedValue === null ? true : storedValue !== 'muted';
-  });
+  const [soundEnabled, setSoundEnabled] = useState(true);
   const eventDetailsRef = useRef(null);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem('celebration-sound', soundEnabled ? 'on' : 'muted');
-    }
-  }, [soundEnabled]);
+    document.title = content.couple.names;
+  }, [content]);
 
   const handleEnvelopeOpen = useCallback(() => {
     setIsEnvelopeOpen(true);
@@ -41,15 +36,15 @@ export default function App() {
   }, [isEnvelopeOpen]);
 
   return (
-    <main style={{ position: 'relative' }}>
+    <main className="invitation-page">
       <button
         type="button"
         className="sound-toggle"
         onClick={() => setSoundEnabled((current) => !current)}
-        aria-pressed={!soundEnabled}
-        aria-label={soundEnabled ? 'Mute celebration sound' : 'Enable celebration sound'}
+        aria-pressed={soundEnabled}
+        aria-label={soundEnabled ? 'Pause wedding music' : 'Resume wedding music'}
       >
-        {soundEnabled ? '🔊' : '🔈'}
+        {soundEnabled ? '🔊' : '🔇'}
       </button>
 
       <Envelope names={content.couple.names} isOpen={isEnvelopeOpen} onOpen={handleEnvelopeOpen} soundEnabled={soundEnabled}>
@@ -58,19 +53,19 @@ export default function App() {
 
       {isEnvelopeOpen && (
         <>
-          <div ref={eventDetailsRef} style={{ opacity: 0, transform: 'translateY(20px)', transition: 'all 500ms ease', paddingTop: 'clamp(1rem, 3vw, 1.5rem)' }}>
-            <EventDetails couple={content.couple} />
+          <div ref={eventDetailsRef} className="content-reveal content-reveal-first">
+            <EventDetails couple={content.couple} eventDateTime={content.eventDateTime} />
           </div>
-          <div ref={(node) => (sectionRefs.current[0] = node)} style={{ opacity: 0, transform: 'translateY(20px)', transition: 'all 500ms ease' }}>
-            <Countdown date="2026-12-13T16:00:00" />
+          <div ref={(node) => (sectionRefs.current[0] = node)} className="content-reveal">
+            <Countdown date={content.eventDateTime} />
           </div>
-          <div ref={(node) => (sectionRefs.current[1] = node)} style={{ opacity: 0, transform: 'translateY(20px)', transition: 'all 500ms ease' }}>
+          <div ref={(node) => (sectionRefs.current[1] = node)} className="content-reveal">
             <Schedule schedule={content.schedule} />
           </div>
-          <div ref={(node) => (sectionRefs.current[2] = node)} style={{ opacity: 0, transform: 'translateY(20px)', transition: 'all 500ms ease' }}>
+          <div ref={(node) => (sectionRefs.current[2] = node)} className="content-reveal">
             <Gallery images={content.gallery} />
           </div>
-          <div ref={(node) => (sectionRefs.current[3] = node)} style={{ opacity: 0, transform: 'translateY(20px)', transition: 'all 500ms ease' }}>
+          <div ref={(node) => (sectionRefs.current[3] = node)} className="content-reveal">
             <PresenceMessage />
           </div>
 
@@ -82,27 +77,61 @@ export default function App() {
           opacity: 1 !important;
           transform: translateY(0) !important;
         }
+        .invitation-page { position: relative; }
+        .content-reveal { opacity: 0; transform: translateY(24px); transition: opacity 750ms ease, transform 750ms cubic-bezier(.2,.7,.2,1); }
+        .content-reveal-first { padding-top: clamp(1rem, 3vw, 1.5rem); }
         .sound-toggle {
           position: fixed;
-          top: 1rem;
-          right: 1rem;
+          top: 1.25rem;
+          right: 1.25rem;
           z-index: 1000;
-          border: 1px solid rgba(184, 147, 90, 0.35);
-          border-radius: 999px;
-          background: rgba(251, 247, 240, 0.9);
-          color: var(--sage);
-          width: 2.75rem;
-          height: 2.75rem;
+          border: 1px solid var(--gold-pale);
+          border-radius: 50%;
+          background: rgba(255,253,249,0.82);
+          backdrop-filter: blur(8px);
+          color: var(--sage-deep);
+          width: 2.9rem;
+          height: 2.9rem;
           display: grid;
           place-items: center;
           cursor: pointer;
-          box-shadow: 0 10px 24px rgba(43, 38, 32, 0.08);
+          box-shadow: 0 8px 22px rgba(51,43,37,0.08);
+          transition: transform 200ms ease, background 200ms ease;
         }
+        .sound-toggle:hover { transform: translateY(-2px); background: var(--cream); }
         .sound-toggle:focus-visible {
           outline: 2px solid var(--sage);
           outline-offset: 3px;
         }
       `}</style>
     </main>
+  );
+}
+
+function WeddingRoute() {
+  const { slug } = useParams();
+  const content = weddings[slug];
+
+  if (!content) {
+    return (
+      <main className="section-shell" style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', textAlign: 'center' }}>
+        <div className="card" style={{ padding: '2rem', maxWidth: '32rem' }}>
+          <h1 className="text-script" style={{ fontSize: '2.5rem', margin: '0 0 0.75rem' }}>Wedding invitation not found</h1>
+          <p style={{ margin: 0 }}>Please check the invitation link and try again.</p>
+        </div>
+      </main>
+    );
+  }
+
+  return <WeddingInvitation key={slug} content={content} />;
+}
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Navigate to={`/w/${defaultWeddingSlug}`} replace />} />
+      <Route path="/w/:slug" element={<WeddingRoute />} />
+      <Route path="*" element={<WeddingRoute />} />
+    </Routes>
   );
 }
