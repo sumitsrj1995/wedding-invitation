@@ -304,15 +304,63 @@ export default function Envelope({ children, names, isOpen, onOpen, soundEnabled
           opacity: 1;
           transform: scale(1);
         }
-        .envelope-shell.mounted .envelope {
-          animation: floatEnvelope 1.6s ease-in-out infinite alternate;
+        @media (min-width: 641px) {
+          .envelope-shell.open {
+            width: min(100%, 34rem);
+            min-height: min(calc(100vh - 4rem), 720px);
+            height: min(calc(100vh - 4rem), 720px);
+            max-height: calc(100vh - 4rem);
+            padding: 1rem 1.25rem;
+          }
+          .envelope-shell.open .invitation-card {
+            padding: 1.35rem 1.25rem 1.5rem;
+          }
+          .envelope-shell.open .hero-section {
+            padding: 1.1rem 1.35rem;
+          }
+          .envelope-shell.open .hero-content {
+            padding: 1.45rem 0.65rem;
+          }
+          .envelope-shell.open .hero-kicker {
+            margin-bottom: 0.55rem;
+          }
+          .envelope-shell.open .hero-name {
+            font-size: clamp(3.15rem, 5.2vw, 5.5rem);
+          }
+          .envelope-shell.open .hero-weds {
+            margin: 0.5rem 0 0.4rem;
+          }
+          .envelope-shell.open .hero-rule {
+            margin: 1rem auto;
+          }
+          .envelope-shell.open .hero-invitation {
+            margin-bottom: 0.75rem;
+          }
+          .envelope-shell.open .hero-date {
+            margin-bottom: 0.85rem;
+          }
+          .envelope-shell.open .hero-blessings {
+            font-size: clamp(0.76rem, 1.35vw, 0.85rem);
+            line-height: 1.5;
+          }
+          .envelope-shell.open .hero-blessings > div + div {
+            margin-top: 0.2rem;
+          }
+          .envelope-shell.open .hero-action {
+            margin-top: 1.1rem;
+          }
+        }
+        .envelope-shell.mounted:not(.open) .envelope {
+          animation: floatEnvelope 2.5s ease-in-out infinite alternate;
         }
         @keyframes floatEnvelope {
           from { transform: translateY(0); }
-          to { transform: translateY(-6px); }
+          to { transform: translateY(-10px); }
         }
         @media (prefers-reduced-motion: reduce) {
-          .envelope-shell.mounted .envelope { animation: none; }
+          .envelope-shell.mounted:not(.open) .envelope {
+            animation: none;
+          }
         }
       `}</style>
     </div>
