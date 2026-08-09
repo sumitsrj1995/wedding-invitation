@@ -5,7 +5,7 @@ export default defineConfig({
   base: '/wedding-invitation/',
   plugins: [react()],
   server: {
-    host: '0.0.0.0',
+    host: 'localhost',
     port: 3000,
   },
 });

@@ -4,7 +4,10 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './styles/theme.css';
 
-const routerBasename = import.meta.env.BASE_URL.replace(/\/$/, '') || '/';
+const configuredBasename = import.meta.env.BASE_URL.replace(/\/$/, '');
+const routerBasename = window.location.pathname.startsWith('/wedding-invitation')
+  ? '/wedding-invitation'
+  : configuredBasename || '/';
 
 // GitHub Pages sends unknown paths to public/404.html. That page preserves
 // the requested route in the query string; restore it before React Router
