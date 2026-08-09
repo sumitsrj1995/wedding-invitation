@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Navigate, Route, Routes, useParams } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation, useParams } from 'react-router-dom';
 import Envelope from './components/Envelope';
 import Hero from './components/Hero';
 import EventDetails from './components/EventDetails';
@@ -108,9 +108,18 @@ function WeddingInvitation({ content }) {
   );
 }
 
+function resolveWeddingSlug(routeSlug, pathname) {
+  if (routeSlug && weddings[routeSlug]) return routeSlug;
+  const matchedSlug = pathname.match(/\/w\/([^/?#]+)/)?.[1];
+  if (matchedSlug && weddings[matchedSlug]) return matchedSlug;
+  return routeSlug ?? matchedSlug;
+}
+
 function WeddingRoute() {
-  const { slug } = useParams();
-  const content = weddings[slug];
+  const { slug: routeSlug } = useParams();
+  const { pathname } = useLocation();
+  const slug = resolveWeddingSlug(routeSlug, pathname);
+  const content = slug ? weddings[slug] : undefined;
 
   if (!content) {
     return (
@@ -131,7 +140,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Navigate to={`/w/${defaultWeddingSlug}`} replace />} />
       <Route path="/w/:slug" element={<WeddingRoute />} />
-      <Route path="*" element={<WeddingRoute />} />
+      <Route path="*" element={<Navigate to={`/w/${defaultWeddingSlug}`} replace />} />
     </Routes>
   );
 }

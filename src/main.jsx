@@ -4,6 +4,8 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './styles/theme.css';
 
+const routerBasename = import.meta.env.BASE_URL.replace(/\/$/, '') || '/';
+
 // GitHub Pages sends unknown paths to public/404.html. That page preserves
 // the requested route in the query string; restore it before React Router
 // reads the location.
@@ -16,7 +18,7 @@ if (githubPagesRoute.startsWith('/')) {
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
+    <BrowserRouter basename={routerBasename}>
       <App />
     </BrowserRouter>
   </React.StrictMode>
