@@ -11,11 +11,11 @@ export const weddings = {
       groom: 'Sumit',
       names: 'Sumit & Gauri',
       date: '13th December 2026',
-      time: '4:00 PM',
+      time: '13-12-2026 Sunday · 4:00 PM',
       location: 'Muktai',
       city: 'Baramati, Pune',
-      address: '[Venue Address]',
-      mapUrl: 'https://www.google.com/maps',
+      address: 'Muktais Imperial Banquets and Lawns, Baramati, Pune, Maharashtra 413102',
+      mapUrl: 'https://maps.app.goo.gl/C5KhzCHXpF3bWXYy6',
       brideParents: 'Mrs. Sunita & Mr. Bhagwat Gore Patil',
       groomParents: 'Mrs. Ujwala & Mr. Ramhari Jagdale'
     },
@@ -25,9 +25,9 @@ export const weddings = {
       { title: 'The celebration', text: 'We are gathering our favorite people to share a day of laughter, candlelight, and the joy of beginning again together.' }
     ],
     schedule: [
-      { time: '3:30 PM', title: 'Ceremony' },
-      { time: '5:00 PM', title: 'Cocktail Hour' },
-      { time: '6:30 PM', title: 'Reception' }
+      { time: '3:30 PM', title: 'Haldi' },
+      { time: '5:00 PM', title: 'Saptapadi' },
+      { time: '6:30 PM', title: 'Dinner' }
     ],
     gallery: [
       photo,

@@ -53,6 +53,7 @@ function WeddingInvitation({ content }) {
 
       {isEnvelopeOpen && (
         <>
+        <br/>
           <div ref={eventDetailsRef} className="content-reveal content-reveal-first">
             <EventDetails couple={content.couple} eventDateTime={content.eventDateTime} />
           </div>

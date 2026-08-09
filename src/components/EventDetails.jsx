@@ -19,16 +19,17 @@ export default function EventDetails({ couple, eventDateTime }) {
       <div className="section-title">Event Details</div>
       <div className="event-grid">
         <article className="event-card event-venue">
-          <div className="text-smallcaps">The Ceremony</div>
-          <h3>The Vows</h3>
+          <div className="text-smallcaps"></div>
+          <h3>The Ceremony</h3>
           <p className="event-time">{couple.time}</p>
           <p className="event-location"><strong>{couple.location}</strong><br />{couple.city}<br /><span>{couple.address}</span></p>
           <a href={couple.mapUrl} target="_blank" rel="noreferrer" className="button">Open Map</a>
         </article>
         <article className="event-card event-reception">
-          <div className="text-smallcaps">The Reception</div>
-          <h3>Dinner &amp; Dancing</h3>
-          <p>Following the ceremony, we will gather for dinner, toasts, and a night of celebration.</p>
+          <div className="text-smallcaps"></div>
+          <h3>Dinner</h3>
+          <p className="event-time">6:30 PM</p>
+          <p>Following the ceremony, we will gather for dinner, and a night of celebration.</p>
           <button className="button" onClick={handleCalendar}>Add to Calendar</button>
         </article>
       </div>

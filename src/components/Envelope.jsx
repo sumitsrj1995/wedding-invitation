@@ -181,7 +181,7 @@ export default function Envelope({ children, names, isOpen, onOpen, soundEnabled
             aria-label="Open the invitation"
           >
             <div className="envelope">
-              <div className="envelope-flap" />
+              {/* <div className="envelope-flap" /> */}
               <div className="envelope-body">
                 <div className="wax-seal">{initials}</div>
               </div>
