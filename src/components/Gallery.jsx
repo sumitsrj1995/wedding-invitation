@@ -9,24 +9,16 @@ export default function Gallery({ images }) {
   const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
-  const [completeDragOffset, setCompleteDragOffset] = useState(0);
-  const [isCompleteDragging, setIsCompleteDragging] = useState(false);
-  const [isCompleteExiting, setIsCompleteExiting] = useState(false);
   const [isDeckEntering, setIsDeckEntering] = useState(false);
   const deckRef = useRef(null);
-  const completeRef = useRef(null);
   const dragStartY = useRef(0);
   const activePointerId = useRef(null);
 
   const hasCards = currentIndex < images.length;
-  const isComplete = !hasCards;
   const stackImages = images.slice(currentIndex, currentIndex + MAX_VISIBLE_STACK);
   const remainingCount = images.length - currentIndex;
 
   const resetDeck = useCallback(() => {
-    setCompleteDragOffset(0);
-    setIsCompleteDragging(false);
-    setIsCompleteExiting(false);
     setDragOffset(0);
     setIsDragging(false);
     setIsExiting(false);
@@ -38,15 +30,6 @@ export default function Gallery({ images }) {
       setIsDeckEntering(false);
     }, RESET_ANIMATION_MS);
   }, []);
-
-  const triggerResetFromSwipe = useCallback(() => {
-    setIsCompleteExiting(true);
-    setCompleteDragOffset(-520);
-
-    window.setTimeout(() => {
-      resetDeck();
-    }, RESET_ANIMATION_MS);
-  }, [resetDeck]);
 
   const finishSwipe = useCallback(() => {
     setIsExiting(true);
@@ -62,12 +45,6 @@ export default function Gallery({ images }) {
   const resetDrag = useCallback(() => {
     setDragOffset(0);
     setIsDragging(false);
-    activePointerId.current = null;
-  }, []);
-
-  const resetCompleteDrag = useCallback(() => {
-    setCompleteDragOffset(0);
-    setIsCompleteDragging(false);
     activePointerId.current = null;
   }, []);
 
@@ -112,50 +89,6 @@ export default function Gallery({ images }) {
     [dragOffset, finishSwipe, isDragging, resetDrag]
   );
 
-  const handleCompletePointerDown = useCallback(
-    (event) => {
-      if (!isComplete || isCompleteExiting || isDeckEntering) return;
-      if (event.target.closest('.gallery-deck-reset')) return;
-
-      activePointerId.current = event.pointerId;
-      dragStartY.current = event.clientY;
-      setIsCompleteDragging(true);
-      completeRef.current?.setPointerCapture(event.pointerId);
-    },
-    [isComplete, isCompleteExiting, isDeckEntering]
-  );
-
-  const handleCompletePointerMove = useCallback(
-    (event) => {
-      if (!isCompleteDragging || event.pointerId !== activePointerId.current || isCompleteExiting) {
-        return;
-      }
-
-      const delta = event.clientY - dragStartY.current;
-      const nextOffset = delta > 0 ? delta * 0.22 : delta;
-      setCompleteDragOffset(nextOffset);
-    },
-    [isCompleteDragging, isCompleteExiting]
-  );
-
-  const handleCompletePointerEnd = useCallback(
-    (event) => {
-      if (!isCompleteDragging || event.pointerId !== activePointerId.current) return;
-
-      completeRef.current?.releasePointerCapture(event.pointerId);
-
-      if (completeDragOffset < -SWIPE_THRESHOLD) {
-        setIsCompleteDragging(false);
-        activePointerId.current = null;
-        triggerResetFromSwipe();
-        return;
-      }
-
-      resetCompleteDrag();
-    },
-    [completeDragOffset, isCompleteDragging, resetCompleteDrag, triggerResetFromSwipe]
-  );
-
   useEffect(() => {
     const deck = deckRef.current;
     if (!deck) return undefined;
@@ -167,18 +100,6 @@ export default function Gallery({ images }) {
     deck.addEventListener('touchmove', blockScroll, { passive: false });
     return () => deck.removeEventListener('touchmove', blockScroll);
   }, [isDragging]);
-
-  useEffect(() => {
-    const complete = completeRef.current;
-    if (!complete) return undefined;
-
-    const blockScroll = (event) => {
-      if (isCompleteDragging) event.preventDefault();
-    };
-
-    complete.addEventListener('touchmove', blockScroll, { passive: false });
-    return () => complete.removeEventListener('touchmove', blockScroll);
-  }, [isCompleteDragging]);
 
   const getCardStyle = (stackIndex) => {
     const depth = stackIndex;
@@ -209,9 +130,6 @@ export default function Gallery({ images }) {
       opacity: depth > 3 ? 0.72 : enterOpacity
     };
   };
-
-  const completeExitY = isCompleteExiting ? -520 : completeDragOffset;
-  const completeExitRotate = isCompleteExiting ? -5 : completeDragOffset * 0.028;
 
   return (
     <section className="section-shell gallery-section">
@@ -258,25 +176,7 @@ export default function Gallery({ images }) {
             })}
           </div>
         ) : (
-          <div
-            ref={completeRef}
-            className={[
-              'gallery-deck-complete',
-              isCompleteDragging ? 'is-dragging' : '',
-              isCompleteExiting ? 'is-exiting' : ''
-            ]
-              .filter(Boolean)
-              .join(' ')}
-            style={{
-              transform: `translate3d(0, ${completeExitY}px, 0) rotate(${completeExitRotate}deg)`,
-              opacity: isCompleteExiting ? 0 : 1
-            }}
-            onPointerDown={handleCompletePointerDown}
-            onPointerMove={handleCompletePointerMove}
-            onPointerUp={handleCompletePointerEnd}
-            onPointerCancel={handleCompletePointerEnd}
-            aria-live="polite"
-          >
+          <div className="gallery-deck-complete" aria-live="polite">
             <span className="text-smallcaps">All moments revealed</span>
             <button type="button" className="button gallery-deck-reset" onClick={resetDeck}>
               Show all photos again
@@ -288,10 +188,6 @@ export default function Gallery({ images }) {
           <p className="gallery-deck-hint text-smallcaps">
             Swipe up · {remainingCount} photos
           </p>
-        ) : null}
-
-        {isComplete && !isCompleteExiting ? (
-          <p className="gallery-deck-hint text-smallcaps">Swipe up to start again</p>
         ) : null}
       </div>
 
