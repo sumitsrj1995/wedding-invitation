@@ -5,6 +5,41 @@ import photo3 from '../photos/photo3.jpeg';
 import photo4 from '../photos/photo4.jpeg';
 export const weddings = {
   'demo-wedding': {
+    theme: 'theme1',
+    eventDateTime: '2026-12-13T16:00:00+05:30',
+    couple: {
+      bride: 'Gauri',
+      groom: 'Sumit',
+      names: 'Sumit & Gauri',
+      date: '13th December 2026',
+      time: '13-12-2026 Sunday · 4:00 PM',
+      location: 'Muktai',
+      city: 'Baramati, Pune',
+      address: 'Muktais Imperial Banquets and Lawns, Baramati, Pune, Maharashtra 413102',
+      mapUrl: 'https://maps.app.goo.gl/C5KhzCHXpF3bWXYy6',
+      brideParents: 'Mrs. Sunita & Mr. Bhagwat Gore Patil',
+      groomParents: 'Mrs. Ujwala & Mr. Ramhari Jagdale'
+    },
+    story: [
+      { title: 'We met', text: 'In the quiet, ordinary way that changes everything, we found each other and discovered a home in the same conversation.' },
+      { title: 'The proposal', text: 'On a golden evening, the question arrived with trembling hands and a promise that would shape the rest of our lives.' },
+      { title: 'The celebration', text: 'We are gathering our favorite people to share a day of laughter, candlelight, and the joy of beginning again together.' }
+    ],
+    schedule: [
+      { time: '3:30 PM', title: 'Haldi' },
+      { time: '5:00 PM', title: 'Saptapadi' },
+      { time: '6:30 PM', title: 'Dinner' }
+    ],
+    gallery: [
+      photo,
+      photo,
+      photo2,
+      photo3,
+      photo4,
+      // photo3
+    ]
+  },
+    'sumitgauri': {
     theme: 'theme2',
     eventDateTime: '2026-12-13T16:00:00+05:30',
     couple: {
@@ -39,8 +74,44 @@ export const weddings = {
       // photo3
     ]
   },
+  'sumit-gauri': {
+    theme: 'theme4',
+    eventDateTime: '2026-12-13T16:00:00+05:30',
+    couple: {
+      bride: 'Gauri',
+      groom: 'Sumit',
+      names: 'Sumit & Gauri',
+      date: '13th December 2026',
+      time: '13-12-2026 Sunday · 4:00 PM',
+      location: 'Muktai',
+      city: 'Baramati, Pune',
+      address: 'Muktais Imperial Banquets and Lawns, Baramati, Pune, Maharashtra 413102',
+      mapUrl: 'https://maps.app.goo.gl/C5KhzCHXpF3bWXYy6',
+      brideParents: 'Mrs. Sunita & Mr. Bhagwat Gore Patil',
+      groomParents: 'Mrs. Ujwala & Mr. Ramhari Jagdale'
+    },
+    story: [
+      { title: 'We met', text: 'In the quiet, ordinary way that changes everything, we found each other and discovered a home in the same conversation.' },
+      { title: 'The proposal', text: 'On a golden evening, the question arrived with trembling hands and a promise that would shape the rest of our lives.' },
+      { title: 'The celebration', text: 'We are gathering our favorite people to share a day of laughter, candlelight, and the joy of beginning again together.' }
+    ],
+    schedule: [
+      { time: '3:30 PM', title: 'Haldi' },
+      { time: '5:00 PM', title: 'Saptapadi' },
+      { time: '6:30 PM', title: 'Dinner' }
+    ],
+    gallery: [
+      photo,
+      photo,
+      photo2,
+      photo3,
+      photo4,
+      // photo3
+    ]
+  },
+  
   'rahul-priya': {
-    theme: 'theme2',
+    theme: 'theme5',
     eventDateTime: '2027-01-12T17:00:00+05:30',
     couple: {
       bride: 'Priya',

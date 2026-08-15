@@ -1,0 +1,254 @@
+/* Theme 3 — cinematic Earth-in-space wedding presentation.
+   Layout and spacing inherit from theme1 (injected together).
+   Visual overrides only. */
+
+[data-theme='theme3'] {
+  --ivory: #010208;
+  --cream: rgba(255, 252, 248, 0.96);
+  --blush: rgba(160, 190, 230, 0.28);
+  --sage: #9cb8e8;
+  --sage-deep: #b8cce8;
+  --ink: rgba(255, 252, 248, 0.94);
+  --muted: rgba(196, 210, 236, 0.76);
+  --gold-leaf: #e8c896;
+  --gold-pale: rgba(232, 200, 150, 0.32);
+  --line: rgba(196, 210, 236, 0.18);
+  --surface-border: rgba(255, 255, 255, 0.12);
+  --surface-border-soft: rgba(255, 255, 255, 0.09);
+  --surface-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  --surface-shadow-soft:
+    0 8px 32px rgba(0, 0, 0, 0.42),
+    0 0 40px rgba(80, 120, 200, 0.08);
+  --surface-shadow-lifted:
+    0 12px 40px rgba(0, 0, 0, 0.48),
+    0 0 56px rgba(100, 140, 220, 0.12);
+  --surface-bg: linear-gradient(
+    165deg,
+    rgba(255, 255, 255, 0.09) 0%,
+    rgba(255, 255, 255, 0.04) 52%,
+    rgba(120, 160, 220, 0.05) 100%
+  );
+  --surface-bg-subtle: linear-gradient(
+    165deg,
+    rgba(255, 255, 255, 0.07) 0%,
+    rgba(255, 255, 255, 0.025) 100%
+  );
+  color: var(--ink);
+  background-color: var(--ivory);
+}
+
+[data-theme='theme3'] html,
+[data-theme='theme3'] body {
+  background: #010208;
+}
+
+[data-theme='theme3'] body::before {
+  display: none;
+}
+
+[data-theme='theme3'] .earth-experience {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+[data-theme='theme3'] .earth-experience canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+[data-theme='theme3'] .theme-stage {
+  position: relative;
+  z-index: 1;
+}
+
+[data-theme='theme3'] .invitation-page {
+  background: transparent;
+}
+
+[data-theme='theme3'] .section-title {
+  color: rgba(255, 250, 244, 0.96);
+  text-shadow: 0 0 28px rgba(120, 160, 220, 0.16);
+}
+
+[data-theme='theme3'] .text-script {
+  text-shadow: 0 0 32px rgba(232, 200, 150, 0.2);
+}
+
+[data-theme='theme3'] .card,
+[data-theme='theme3'] .event-grid,
+[data-theme='theme3'] .countdown-grid,
+[data-theme='theme3'] .presence-panel,
+[data-theme='theme3'] .invitation-card,
+[data-theme='theme3'] .gallery-deck-complete {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme='theme3'] .card::after,
+[data-theme='theme3'] .presence-panel::after,
+[data-theme='theme3'] .invitation-card::after,
+[data-theme='theme3'] .gallery-deck-complete::after {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+}
+
+[data-theme='theme3'] .button {
+  border-color: rgba(232, 200, 150, 0.5);
+  color: rgba(255, 250, 244, 0.92);
+  background: rgba(255, 255, 255, 0.035);
+  box-shadow: 0 0 18px rgba(100, 140, 220, 0.08);
+}
+
+[data-theme='theme3'] .button:hover,
+[data-theme='theme3'] .button:focus-visible {
+  background: rgba(120, 160, 220, 0.22);
+  border-color: rgba(232, 200, 150, 0.72);
+  color: var(--cream);
+  box-shadow: 0 8px 28px rgba(80, 120, 200, 0.2);
+}
+
+[data-theme='theme3'] .sound-toggle {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: rgba(255, 250, 244, 0.9);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.38), 0 0 24px rgba(100, 140, 220, 0.1);
+}
+
+[data-theme='theme3'] .sound-toggle:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='theme3'] .envelope {
+  background: linear-gradient(168deg, rgba(255, 255, 255, 0.1) 0%, rgba(80, 120, 200, 0.08) 100%);
+  border-color: rgba(196, 210, 236, 0.24);
+  box-shadow: var(--surface-shadow-soft), 0 0 36px rgba(100, 140, 220, 0.1);
+}
+
+[data-theme='theme3'] .envelope-shell.mounted:not(.open) .envelope-trigger:hover .envelope {
+  box-shadow: var(--surface-shadow-lifted), 0 0 44px rgba(120, 160, 220, 0.14);
+}
+
+[data-theme='theme3'] .wax-seal {
+  background: linear-gradient(145deg, #4a6088, #324868);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25), 0 0 20px rgba(120, 160, 220, 0.22);
+}
+
+[data-theme='theme3'] .hero-content::before,
+[data-theme='theme3'] .hero-content::after {
+  background: linear-gradient(transparent, rgba(196, 210, 236, 0.35) 18%, rgba(232, 200, 150, 0.32) 82%, transparent);
+}
+
+[data-theme='theme3'] .hero-kicker,
+[data-theme='theme3'] .hero-date,
+[data-theme='theme3'] .countdown-heading .text-smallcaps,
+[data-theme='theme3'] .presence-panel .text-smallcaps {
+  color: rgba(180, 200, 236, 0.88);
+}
+
+[data-theme='theme3'] .hero-ornament,
+[data-theme='theme3'] .hero-weds,
+[data-theme='theme3'] .hero-and,
+[data-theme='theme3'] .countdown-flourish,
+[data-theme='theme3'] .footer-ornament {
+  color: var(--gold-leaf);
+}
+
+[data-theme='theme3'] .hero-name,
+[data-theme='theme3'] .event-location strong,
+[data-theme='theme3'] .schedule-title,
+[data-theme='theme3'] .countdown-value,
+[data-theme='theme3'] .presence-panel h2,
+[data-theme='theme3'] .footer-names {
+  color: rgba(255, 250, 244, 0.96);
+}
+
+[data-theme='theme3'] .hero-invitation,
+[data-theme='theme3'] .hero-blessings,
+[data-theme='theme3'] .event-card p,
+[data-theme='theme3'] .countdown-label,
+[data-theme='theme3'] .invitation-footer p,
+[data-theme='theme3'] .presence-panel p:last-child,
+[data-theme='theme3'] .gallery-deck-hint {
+  color: var(--muted);
+}
+
+[data-theme='theme3'] .event-time,
+[data-theme='theme3'] .presence-panel h2 em {
+  color: #e8c896;
+}
+
+[data-theme='theme3'] .event-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+}
+
+[data-theme='theme3'] .event-card + .event-card {
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+[data-theme='theme3'] .event-card .text-smallcaps,
+[data-theme='theme3'] .schedule-time {
+  color: rgba(180, 200, 236, 0.8);
+}
+
+[data-theme='theme3'] .countdown-item + .countdown-item {
+  border-color: rgba(196, 210, 236, 0.16);
+}
+
+[data-theme='theme3'] .schedule-marker::before {
+  background: rgba(196, 210, 236, 0.2);
+}
+
+[data-theme='theme3'] .schedule-marker span {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(232, 200, 150, 0.42);
+  color: var(--gold-leaf);
+  box-shadow: 0 0 14px rgba(100, 140, 220, 0.1);
+}
+
+[data-theme='theme3'] .gallery-deck-card {
+  background: linear-gradient(165deg, rgba(8, 12, 24, 0.62) 0%, rgba(4, 8, 18, 0.72) 100%);
+  border-color: rgba(255, 255, 255, 0.09);
+  box-shadow: var(--surface-shadow-soft), 0 0 28px rgba(100, 140, 220, 0.08);
+}
+
+[data-theme='theme3'] .gallery-deck-card-top:not(.is-dragging):not(.is-exiting):hover {
+  box-shadow: var(--surface-shadow-lifted), 0 0 36px rgba(120, 160, 220, 0.14);
+}
+
+[data-theme='theme3'] .gallery-deck-card img {
+  filter: saturate(1.03) contrast(1.02);
+}
+
+[data-theme='theme3'] .gallery-deck-card-top:not(.is-dragging):not(.is-exiting):hover img {
+  filter: saturate(1.05) contrast(1.04) brightness(1.02);
+}
+
+[data-theme='theme3'] .gallery-deck-complete {
+  color: rgba(180, 200, 236, 0.86);
+}
+
+[data-theme='theme3'] .presence-rule,
+[data-theme='theme3'] .hero-rule,
+[data-theme='theme3'] .footer-rule {
+  background: linear-gradient(90deg, transparent, rgba(232, 200, 150, 0.82), transparent);
+}
+
+[data-theme='theme3'] :focus-visible {
+  outline-color: rgba(160, 190, 236, 0.85);
+}
+
+@media (max-width: 767px) {
+  [data-theme='theme3'] .card,
+  [data-theme='theme3'] .event-grid,
+  [data-theme='theme3'] .countdown-grid,
+  [data-theme='theme3'] .presence-panel,
+  [data-theme='theme3'] .invitation-card {
+    backdrop-filter: blur(11px);
+    -webkit-backdrop-filter: blur(11px);
+  }
+}

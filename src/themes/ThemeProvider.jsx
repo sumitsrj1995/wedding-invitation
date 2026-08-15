@@ -2,17 +2,26 @@ import { Suspense, lazy, useLayoutEffect } from 'react';
 import { resolveTheme } from './index';
 import theme1Styles from './theme1.css?inline';
 import theme2Styles from './theme2.css?inline';
+import theme3Styles from './theme3.css?inline';
+import theme4Styles from './theme4.css?inline';
 
 const GalaxyBackground = lazy(() => import('./theme2/GalaxyBackground'));
+const Theme3EarthExperience = lazy(() => import('./theme3/EarthExperience'));
+const Theme4EarthExperience = lazy(() => import('./theme4/EarthExperience'));
+const Theme4PhotoDepthEnhancer = lazy(() => import('./theme4/PhotoDepthEnhancer'));
 
 const themeStyles = {
   theme1: theme1Styles,
-  theme2: `${theme1Styles}\n${theme2Styles}`
+  theme2: `${theme1Styles}\n${theme2Styles}`,
+  theme3: `${theme1Styles}\n${theme3Styles}`,
+  theme4: `${theme1Styles}\n${theme4Styles}`
 };
 
 export default function ThemeProvider({ theme, children }) {
   const resolvedTheme = resolveTheme(theme);
   const isGalaxyTheme = resolvedTheme === 'theme2';
+  const isTheme3Earth = resolvedTheme === 'theme3';
+  const isTheme4Earth = resolvedTheme === 'theme4';
 
   useLayoutEffect(() => {
     document.documentElement.dataset.theme = resolvedTheme;
@@ -34,6 +43,17 @@ export default function ThemeProvider({ theme, children }) {
       {isGalaxyTheme ? (
         <Suspense fallback={null}>
           <GalaxyBackground />
+        </Suspense>
+      ) : null}
+      {isTheme3Earth ? (
+        <Suspense fallback={null}>
+          <Theme3EarthExperience />
+        </Suspense>
+      ) : null}
+      {isTheme4Earth ? (
+        <Suspense fallback={null}>
+          <Theme4EarthExperience />
+          <Theme4PhotoDepthEnhancer />
         </Suspense>
       ) : null}
       <div className="theme-stage">{children}</div>
