@@ -5,6 +5,7 @@ import photo3 from '../photos/photo3.jpeg';
 import photo4 from '../photos/photo4.jpeg';
 export const weddings = {
   'demo-wedding': {
+    theme: 'theme2',
     eventDateTime: '2026-12-13T16:00:00+05:30',
     couple: {
       bride: 'Gauri',
@@ -39,6 +40,7 @@ export const weddings = {
     ]
   },
   'rahul-priya': {
+    theme: 'theme2',
     eventDateTime: '2027-01-12T17:00:00+05:30',
     couple: {
       bride: 'Priya',

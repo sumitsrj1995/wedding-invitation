@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
-import './styles/theme.css';
 
 const configuredBasename = import.meta.env.BASE_URL.replace(/\/$/, '');
 const routerBasename = window.location.pathname.startsWith('/wedding-invitation')
