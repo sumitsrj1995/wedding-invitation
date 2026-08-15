@@ -34,8 +34,34 @@ export default function EventDetails({ couple, eventDateTime }) {
         </article>
       </div>
       <style>{`
-        .event-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: var(--radius-soft); overflow: hidden; box-shadow: 0 16px 42px rgba(51,43,37,0.045); }
-        .event-card { padding: clamp(1.75rem, 5vw, 3.25rem); min-height: 19rem; display: flex; flex-direction: column; align-items: flex-start; background: rgba(255,253,249,0.3); }
+        .event-details {
+          margin-top: clamp(1.25rem, 3vw, 2.5rem);
+        }
+        .event-grid {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          border: 1px solid var(--surface-border-soft);
+          border-radius: var(--radius-soft);
+          overflow: hidden;
+          background: var(--surface-bg-subtle);
+          box-shadow: var(--surface-shadow-soft), var(--surface-highlight);
+        }
+        .event-card {
+          position: relative;
+          padding: clamp(1.75rem, 5vw, 3.25rem);
+          min-height: 19rem;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          background: linear-gradient(180deg, rgba(255, 253, 249, 0.34) 0%, rgba(255, 253, 249, 0.12) 100%);
+        }
+        .event-card::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.34);
+        }
         .event-card + .event-card { border-left: 1px solid var(--line); } .event-card .text-smallcaps { color: var(--sage-deep); font-size: 0.63rem; }
         .event-card h3 { margin: 0.8rem 0 0.35rem; font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 500; letter-spacing: -0.04em; }
         .event-card p { color: var(--muted); font-size: 1.02rem; max-width: 24rem; } .event-time { color: var(--gold-leaf) !important; font-style: italic; font-size: 1.2rem !important; margin: 0 0 1.35rem; }

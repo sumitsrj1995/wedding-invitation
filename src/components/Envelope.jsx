@@ -230,12 +230,15 @@ export default function Envelope({ children, names, isOpen, onOpen, soundEnabled
           position: relative;
           width: min(92vw, 300px);
           height: clamp(150px, 34vw, 200px);
-          background: var(--ivory);
-          border: 1px solid rgba(184,147,90,0.45);
+          background: linear-gradient(168deg, rgba(255, 253, 249, 0.98) 0%, rgba(248, 244, 237, 0.92) 100%);
+          border: 1px solid var(--surface-border-soft);
           border-radius: 0.15rem 0.15rem 1.2rem 1.2rem;
-          box-shadow: 0 26px 54px rgba(51,43,37,0.11);
+          box-shadow: var(--surface-shadow-soft), var(--surface-highlight);
           transform-style: preserve-3d;
-          transition: transform 650ms cubic-bezier(.2,.8,.2,1), opacity 650ms ease;
+          transition: transform 650ms cubic-bezier(.2,.8,.2,1), opacity 650ms ease, box-shadow 280ms ease;
+        }
+        .envelope-shell.mounted:not(.open) .envelope-trigger:hover .envelope {
+          box-shadow: var(--surface-shadow-lifted), var(--surface-highlight);
         }
         @media (max-width: 640px) {
           .envelope {
@@ -292,13 +295,23 @@ export default function Envelope({ children, names, isOpen, onOpen, soundEnabled
           width: 100%;
           padding: clamp(1.25rem, 4vw, 2.5rem) clamp(1rem, 3vw, 1.5rem) clamp(1.75rem, 6vw, 2.5rem);
           border-radius: var(--radius-soft);
-          background: rgba(255,253,249,0.9);
+          border: 1px solid var(--surface-border-soft);
+          background: var(--surface-bg);
           opacity: 0;
           transform: scale(0.94);
-          transition: opacity 500ms ease, transform 500ms ease;
-          box-shadow: 0 25px 60px rgba(51,43,37,0.08);
+          transition: opacity 500ms ease, transform 500ms ease, box-shadow 500ms ease;
+          box-shadow: var(--surface-shadow-soft), var(--surface-highlight);
           box-sizing: border-box;
           overflow: visible;
+          isolation: isolate;
+        }
+        .invitation-card::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          pointer-events: none;
+          box-shadow: inset 0 0 0 1px rgba(255, 253, 249, 0.24);
         }
         .envelope-shell.open .invitation-card {
           opacity: 1;
