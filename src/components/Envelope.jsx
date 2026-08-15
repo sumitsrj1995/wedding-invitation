@@ -140,7 +140,7 @@ export default function Envelope({ children, names, isOpen, onOpen, soundEnabled
       particleCount: 72,
       spread: 95,
       startVelocity: 42,
-      ticks: 260,
+      ticks: 520,
       colors: ['#7A8B6F', '#E8C4C4', '#B8935A', '#FBF7F0'],
       origin: { x: 0.5, y: 0.58 },
       scalar: 1,
@@ -153,18 +153,18 @@ export default function Envelope({ children, names, isOpen, onOpen, soundEnabled
         particleCount: 54,
         spread: 120,
         startVelocity: 32,
-        ticks: 220,
+        ticks: 440,
         colors: ['#7A8B6F', '#E8C4C4', '#B8935A', '#FBF7F0'],
         origin: { x: 0.5, y: 0.6 },
         scalar: 0.9,
         gravity: 0.72,
         decay: 0.92,
       });
-    }, 350);
+    }, 700);
 
     cleanupTimerRef.current = window.setTimeout(() => {
       clearCelebration();
-    }, 3200);
+    }, 6400);
   };
 
   return (
