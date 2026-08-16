@@ -40,7 +40,7 @@ export const weddings = {
     ]
   },
     'sumitgauri': {
-    theme: 'theme2',
+    theme: 'theme5',
     eventDateTime: '2026-12-13T16:00:00+05:30',
     couple: {
       bride: 'Gauri',
