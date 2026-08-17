@@ -413,7 +413,8 @@ button, input, select, textarea { font: inherit; }
 .gallery-deck-card img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   pointer-events: none;
   transition: filter 500ms ease;
 }

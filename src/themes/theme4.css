@@ -434,7 +434,9 @@
   --t4-shadow-opacity: 0.38;
   overflow: visible;
   transform-style: preserve-3d;
-  background: rgba(8, 8, 12, 0.74);
+  background: rgba(6, 8, 14, 0.14);
+  backdrop-filter: blur(16px) saturate(1.12);
+  -webkit-backdrop-filter: blur(16px) saturate(1.12);
   border: 1px solid rgba(201, 169, 98, 0.16);
   border-radius: 0.2rem;
   box-shadow: var(--surface-shadow-soft), var(--surface-highlight);
@@ -503,6 +505,9 @@
   transform-style: preserve-3d;
   transform: translate3d(0, 0, 14px);
   overflow: hidden;
+  background: rgba(4, 6, 10, 0.08);
+  backdrop-filter: blur(10px) saturate(1.08);
+  -webkit-backdrop-filter: blur(10px) saturate(1.08);
   box-shadow:
     inset 0 0 0 1px rgba(220, 196, 144, 0.26),
     inset 0 0 0 2px rgba(6, 8, 14, 0.72),
@@ -519,7 +524,9 @@
 [data-theme='theme4'] .theme4-photo-depth__layer--bg {
   inset: -8%;
   transform: translate3d(0, var(--t4-bg-y), -20px) scale(1.06);
-  opacity: 0.55;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 [data-theme='theme4'] .theme4-photo-depth__layer--bg img {
@@ -531,13 +538,20 @@
 }
 
 [data-theme='theme4'] .theme4-photo-depth__layer--fg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
   transform: translate3d(0, var(--t4-fg-y), 18px);
 }
 
 [data-theme='theme4'] .theme4-photo-depth__layer--fg img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
   pointer-events: none;
   filter: saturate(1.01) contrast(1.02);
   transition: filter 680ms ease;
@@ -565,7 +579,7 @@
   position: absolute;
   inset: 0;
   transform: translate3d(0, 0, 20px);
-  box-shadow: inset 0 0 36px rgba(0, 0, 0, 0.18);
+  box-shadow: inset 0 0 28px rgba(0, 0, 0, 0.1);
   pointer-events: none;
 }
 

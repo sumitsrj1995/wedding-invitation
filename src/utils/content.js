@@ -3,6 +3,7 @@ import photo from '../photos/photo.jpeg';
 import photo2 from '../photos/photo2.jpeg';
 import photo3 from '../photos/photo3.jpeg';
 import photo4 from '../photos/photo4.jpeg';
+import photo_ from '../photos/photo_.jpeg';
 export const weddings = {
   'demo-wedding': {
     theme: 'theme1',
@@ -31,12 +32,12 @@ export const weddings = {
       { time: '6:30 PM', title: 'Dinner' }
     ],
     gallery: [
-      photo,
+      photo_,
       photo,
       photo2,
       photo3,
       photo4,
-      // photo3
+      
     ]
   },
     'sumitgauri': {
@@ -66,12 +67,11 @@ export const weddings = {
       { time: '6:30 PM', title: 'Dinner' }
     ],
     gallery: [
-      photo,
+      photo_,
       photo,
       photo2,
       photo3,
       photo4,
-      // photo3
     ]
   },
   'sumit-gauri': {
@@ -105,7 +105,7 @@ export const weddings = {
       photo,
       photo2,
       photo3,
-      photo4,
+      photo4
       // photo3
     ]
   },
