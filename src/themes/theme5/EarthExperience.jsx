@@ -25,9 +25,9 @@ export default function EarthExperience() {
       <ScrollProgressProvider>
         <Canvas
           camera={camera}
-          dpr={isMobile ? [1, 1.2] : [1, 1.5]}
+          dpr={[1, 1.5]}
           gl={{
-            antialias: !isMobile,
+            antialias: true,
             alpha: false,
             powerPreference: 'high-performance'
           }}

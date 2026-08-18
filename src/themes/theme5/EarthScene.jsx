@@ -14,13 +14,13 @@ const earthDisplayRotation = new THREE.Quaternion().setFromAxisAngle(
   INITIAL_EARTH_Y
 );
 
-function ScenePostProcessing({ enabled }) {
-  if (!enabled) return null;
-
+function ScenePostProcessing({ isMobile = false }) {
   return (
     <EffectComposer multisampling={0}>
       <Bloom intensity={0.38} luminanceThreshold={0.12} luminanceSmoothing={0.72} mipmapBlur />
-      <DepthOfField focusDistance={0.012} focalLength={0.045} bokehScale={1.6} height={540} />
+      {!isMobile ? (
+        <DepthOfField focusDistance={0.012} focalLength={0.045} bokehScale={1.6} height={540} />
+      ) : null}
       <Vignette eskil offset={0.14} darkness={0.72} />
     </EffectComposer>
   );
@@ -80,7 +80,7 @@ export default function EarthScene({ isMobile = false, reducedMotion = false }) 
       </Suspense>
 
       <ScrollCameraRig isMobile={isMobile} reducedMotion={reducedMotion} />
-      <ScenePostProcessing enabled={!isMobile} />
+      <ScenePostProcessing isMobile={isMobile} />
     </>
   );
 }
