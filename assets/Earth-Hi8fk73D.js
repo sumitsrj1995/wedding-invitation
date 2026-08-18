@@ -1,4 +1,4 @@
-import{r as s,j as e}from"./index-Dr-GndW_.js";import{b as g,V as f,u as x,N as y,A as M,B as D}from"./Sparkles-Xdb2Xl2z.js";import{b as j}from"./SpaceEnvironment-JsP0TqWD.js";const l="/wedding-invitation/textures/theme3/",W=`
+import{r as s,j as e}from"./index-dGhSnQ2m.js";import{b as g,V as f,u as x,N as y,A as M,B as D}from"./Sparkles-BDut9iIx.js";import{b as j}from"./SpaceEnvironment-Dr_QtlUC.js";const l="/wedding-invitation/textures/theme3/",W=`
   varying vec2 vUv;
   varying vec3 vNormalW;
   varying vec3 vPositionW;
