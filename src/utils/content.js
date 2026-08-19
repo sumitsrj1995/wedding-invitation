@@ -32,8 +32,7 @@ export const weddings = {
       { time: '6:30 PM', title: 'Dinner' }
     ],
     gallery: [
-      photo_,
-      photo,
+   
       photo2,
       photo3,
       photo4,
@@ -101,8 +100,7 @@ export const weddings = {
       { time: '6:30 PM', title: 'Dinner' }
     ],
     gallery: [
-      photo,
-      photo,
+      
       photo2,
       photo3,
       photo4
