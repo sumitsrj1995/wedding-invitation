@@ -41,7 +41,7 @@ export const weddings = {
     ]
   },
     'sumitgauri': {
-    theme: 'theme5',
+    theme: 'theme6',
     eventDateTime: '2026-12-13T16:00:00+05:30',
     couple: {
       bride: 'Gauri',
@@ -75,7 +75,7 @@ export const weddings = {
     ]
   },
   'sumit-gauri': {
-    theme: 'theme4',
+    theme: 'theme6',
     eventDateTime: '2026-12-13T16:00:00+05:30',
     couple: {
       bride: 'Gauri',
@@ -111,7 +111,7 @@ export const weddings = {
   },
   
   'rahul-priya': {
-    theme: 'theme5',
+    theme: 'theme6',
     eventDateTime: '2027-01-12T17:00:00+05:30',
     couple: {
       bride: 'Priya',
