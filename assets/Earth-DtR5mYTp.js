@@ -1,4 +1,4 @@
-import{r as s,j as e}from"./index-dGhSnQ2m.js";import{b as g,V as f,u as x,N as y,A as M,B as D}from"./Sparkles-BDut9iIx.js";import{b as j}from"./SpaceEnvironment-Dr_QtlUC.js";const l="/wedding-invitation/textures/theme3/",W=`
+import{r as s,j as e}from"./index-8_rSQdV7.js";import{S as g,V as f,u as x,N as y,A as M,B as D}from"./react-three-fiber.esm-CQGky1wO.js";import{a as j}from"./Vignette-kwarWAgR.js";const l="/wedding-invitation/textures/theme3/",S=`
   varying vec2 vUv;
   varying vec3 vNormalW;
   varying vec3 vPositionW;
@@ -10,7 +10,7 @@ import{r as s,j as e}from"./index-dGhSnQ2m.js";import{b as g,V as f,u as x,N as 
     vNormalW = normalize(mat3(modelMatrix) * normal);
     gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
   }
-`,S=`
+`,W=`
   uniform sampler2D dayMap;
   uniform sampler2D nightMap;
   uniform sampler2D specularMap;
@@ -51,4 +51,4 @@ import{r as s,j as e}from"./index-dGhSnQ2m.js";import{b as g,V as f,u as x,N as 
     vec3 atmosphere = vec3(0.42, 0.62, 1.0) * intensity;
     gl_FragColor = vec4(atmosphere, intensity * 0.72);
   }
-`;function C({radius:c=1.65,reducedMotion:h=!1,isMobile:r=!1}){const m=s.useRef(null),v=s.useRef(null),a=r?48:72,[o,t,i,n]=j([`${l}earth_day.jpg`,`${l}earth_lights.png`,`${l}earth_specular.jpg`,`${l}earth_clouds.png`]);s.useEffect(()=>{[o,t,i,n].forEach(p=>{p.colorSpace=g,p.anisotropy=r?4:8}),n.anisotropy=r?2:4},[n,o,r,t,i]);const u=s.useMemo(()=>({dayMap:{value:o},nightMap:{value:t},specularMap:{value:i},sunDirection:{value:new f(5,2,3).normalize()}}),[o,t,i]);return x((p,d)=>{h||(m.current&&(m.current.rotation.y+=d*.018),v.current&&(v.current.rotation.y+=d*.024))}),e.jsxs("group",{ref:m,children:[e.jsxs("mesh",{children:[e.jsx("sphereGeometry",{args:[c,a,a]}),e.jsx("shaderMaterial",{uniforms:u,vertexShader:W,fragmentShader:S})]}),e.jsxs("mesh",{ref:v,scale:1.006,children:[e.jsx("sphereGeometry",{args:[c,a,a]}),e.jsx("meshStandardMaterial",{map:n,transparent:!0,opacity:.34,depthWrite:!1,blending:y})]}),e.jsxs("mesh",{scale:1.045,children:[e.jsx("sphereGeometry",{args:[c,r?32:48,r?32:48]}),e.jsx("shaderMaterial",{vertexShader:w,fragmentShader:z,transparent:!0,depthWrite:!1,side:D,blending:M})]})]})}export{C as E};
+`;function C({radius:c=1.65,reducedMotion:h=!1,isMobile:r=!1}){const m=s.useRef(null),v=s.useRef(null),a=r?48:72,[o,t,i,n]=j([`${l}earth_day.jpg`,`${l}earth_lights.png`,`${l}earth_specular.jpg`,`${l}earth_clouds.png`]);s.useEffect(()=>{[o,t,i,n].forEach(p=>{p.colorSpace=g,p.anisotropy=r?4:8}),n.anisotropy=r?2:4},[n,o,r,t,i]);const u=s.useMemo(()=>({dayMap:{value:o},nightMap:{value:t},specularMap:{value:i},sunDirection:{value:new f(5,2,3).normalize()}}),[o,t,i]);return x((p,d)=>{h||(m.current&&(m.current.rotation.y+=d*.018),v.current&&(v.current.rotation.y+=d*.024))}),e.jsxs("group",{ref:m,children:[e.jsxs("mesh",{children:[e.jsx("sphereGeometry",{args:[c,a,a]}),e.jsx("shaderMaterial",{uniforms:u,vertexShader:S,fragmentShader:W})]}),e.jsxs("mesh",{ref:v,scale:1.006,children:[e.jsx("sphereGeometry",{args:[c,a,a]}),e.jsx("meshStandardMaterial",{map:n,transparent:!0,opacity:.34,depthWrite:!1,blending:y})]}),e.jsxs("mesh",{scale:1.045,children:[e.jsx("sphereGeometry",{args:[c,r?32:48,r?32:48]}),e.jsx("shaderMaterial",{vertexShader:w,fragmentShader:z,transparent:!0,depthWrite:!1,side:D,blending:M})]})]})}export{C as E};
