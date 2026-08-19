@@ -1,4 +1,4 @@
-import{r as s,j as e}from"./index-8_rSQdV7.js";import{S as g,V as f,u as x,N as y,A as M,B as D}from"./react-three-fiber.esm-CQGky1wO.js";import{a as j}from"./Vignette-kwarWAgR.js";const l="/wedding-invitation/textures/theme3/",S=`
+import{r as s,j as e}from"./index-DAH4dUCP.js";import{S as g,V as f,u as x,N as y,A as M,B as D}from"./react-three-fiber.esm-BsJKcRKc.js";import{a as j}from"./Vignette-CUMQVnsS.js";const l="/wedding-invitation/textures/theme3/",S=`
   varying vec2 vUv;
   varying vec3 vNormalW;
   varying vec3 vPositionW;
