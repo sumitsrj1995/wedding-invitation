@@ -74,7 +74,7 @@ export const weddings = {
     ]
   },
   'sumit-gauri': {
-    theme: 'theme6',
+    theme: 'theme7',
     eventDateTime: '2026-12-13T16:00:00+05:30',
     couple: {
       bride: 'Gauri',
@@ -142,5 +142,7 @@ export const weddings = {
       'https://placehold.co/800x1000?text=Rahul+%26+Priya+5',
       'https://placehold.co/800x1000?text=Rahul+%26+Priya+6'
     ]
-  }
+  },
+
+
 };

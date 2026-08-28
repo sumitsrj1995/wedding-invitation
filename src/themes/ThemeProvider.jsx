@@ -6,6 +6,8 @@ import theme3Styles from './theme3.css?inline';
 import theme4Styles from './theme4.css?inline';
 import theme5Styles from './theme5.css?inline';
 import theme6Styles from './theme6.css?inline';
+import theme7Styles from './theme7.css?inline';
+import theme8Styles from './theme8.css?inline';
 
 const GalaxyBackground = lazy(() => import('./theme2/GalaxyBackground'));
 const Theme3EarthExperience = lazy(() => import('./theme3/EarthExperience'));
@@ -15,6 +17,11 @@ const Theme5EarthExperience = lazy(() => import('./theme5/EarthExperience'));
 const Theme5PhotoDepthEnhancer = lazy(() => import('./theme5/PhotoDepthEnhancer'));
 const Theme6EarthExperience = lazy(() => import('./theme6/EarthExperience'));
 const Theme6PhotoDepthEnhancer = lazy(() => import('./theme6/PhotoDepthEnhancer'));
+const Theme7EarthExperience = lazy(() => import('./theme7/EarthExperience'));
+const Theme7PhotoDepthEnhancer = lazy(() => import('./theme7/PhotoDepthEnhancer'));
+const Theme8EarthExperience = lazy(() => import('./theme8/EarthExperience'));
+const Theme8PhotoDepthEnhancer = lazy(() => import('./theme8/PhotoDepthEnhancer'));
+const TileTiltEnhancer = lazy(() => import('./theme8/TileTiltEnhancer'));
 
 const themeStyles = {
   theme1: theme1Styles,
@@ -22,7 +29,9 @@ const themeStyles = {
   theme3: `${theme1Styles}\n${theme3Styles}`,
   theme4: `${theme1Styles}\n${theme4Styles}`,
   theme5: `${theme1Styles}\n${theme5Styles}`,
-  theme6: `${theme1Styles}\n${theme6Styles}`
+  theme6: `${theme1Styles}\n${theme6Styles}`,
+  theme7: `${theme1Styles}\n${theme7Styles}`,
+  theme8: `${theme1Styles}\n${theme8Styles}`
 };
 
 export default function ThemeProvider({ theme, children }) {
@@ -32,6 +41,8 @@ export default function ThemeProvider({ theme, children }) {
   const isTheme4Earth = resolvedTheme === 'theme4';
   const isTheme5Earth = resolvedTheme === 'theme5';
   const isTheme6Earth = resolvedTheme === 'theme6';
+  const isTheme7Earth = resolvedTheme === 'theme7';
+  const isTheme8Tiles = resolvedTheme === 'theme8';
 
   useLayoutEffect(() => {
     document.documentElement.dataset.theme = resolvedTheme;
@@ -76,6 +87,19 @@ export default function ThemeProvider({ theme, children }) {
         <Suspense fallback={null}>
           <Theme6EarthExperience />
           <Theme6PhotoDepthEnhancer />
+        </Suspense>
+      ) : null}
+      {isTheme7Earth ? (
+        <Suspense fallback={null}>
+          <Theme7EarthExperience />
+          <Theme7PhotoDepthEnhancer />
+        </Suspense>
+      ) : null}
+      {isTheme8Tiles ? (
+        <Suspense fallback={null}>
+          <Theme8EarthExperience />
+          <Theme8PhotoDepthEnhancer />
+          <TileTiltEnhancer />
         </Suspense>
       ) : null}
       <div className="theme-stage">{children}</div>
