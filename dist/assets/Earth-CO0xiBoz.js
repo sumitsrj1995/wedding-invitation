@@ -1,4 +1,4 @@
-import{r as s,j as e}from"./index-C9aMRQIh.js";import{S as g,V as f,u as x,N as y,A as M,B as D}from"./react-three-fiber.esm-9Y0j8yYK.js";import{a as j}from"./Vignette-CQR4bDdv.js";const l="/textures/theme3/",S=`
+import{r as s,j as e}from"./index-C-uicgD2.js";import{S as g,V as f,u as x,N as y,A as M,B as D}from"./react-three-fiber.esm-zD_8Je7H.js";import{a as j}from"./Vignette-CIbUZzCm.js";const l="/textures/theme3/",S=`
   varying vec2 vUv;
   varying vec3 vNormalW;
   varying vec3 vPositionW;
