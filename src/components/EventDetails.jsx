@@ -16,11 +16,11 @@ export default function EventDetails({ couple, eventDateTime }) {
 
   return (
     <section id="details" className="section-shell event-details">
-      <div className="section-title">The Celebration Call</div>
+      <div className="section-title">Event Details</div>
       <div className="event-grid">
         <article className="event-card event-venue">
           <div className="text-smallcaps"></div>
-          <h3>Join us for the beginning</h3>
+          <h3>The Ceremony</h3>
           <p className="event-time">{couple.time}</p>
           <p className="event-location"><strong>{couple.location}</strong><br />{couple.city}<br /><span>{couple.address}</span></p>
           <a href={couple.mapUrl} target="_blank" rel="noreferrer" className="button">Open Map</a>
