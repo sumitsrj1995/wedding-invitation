@@ -2,13 +2,18 @@ import { Suspense, useLayoutEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { Bloom, DepthOfField, EffectComposer, Vignette } from '@react-three/postprocessing';
 import SpaceEnvironment from './SpaceEnvironment';
-import Earth from './Earth';
+import Earth, { INITIAL_EARTH_Y } from './Earth';
 import Moon from './Moon';
 import Planets from './Planets';
 import ScrollCameraRig from './ScrollCameraRig';
-import { getCurrentISTDate, getSunDirectionInertial } from './solarPosition';
+import { getCurrentISTDate, getSunDirectionECEF } from './solarPosition';
 
 const initialSun = new THREE.Vector3();
+const initialSunWorld = new THREE.Vector3();
+const earthDisplayRotation = new THREE.Quaternion().setFromAxisAngle(
+  new THREE.Vector3(0, 1, 0),
+  INITIAL_EARTH_Y
+);
 
 function ScenePostProcessing({ isMobile = false }) {
   return (
@@ -24,13 +29,14 @@ function ScenePostProcessing({ isMobile = false }) {
 
 export default function EarthScene({ isMobile = false, reducedMotion = false }) {
   const sunLightRef = useRef(null);
-  const sunDirectionRef = useRef(getSunDirectionInertial(getCurrentISTDate(), new THREE.Vector3()));
+  const sunDirectionRef = useRef(new THREE.Vector3());
 
   useLayoutEffect(() => {
     if (!sunLightRef.current) return;
-    getSunDirectionInertial(getCurrentISTDate(), initialSun);
-    sunDirectionRef.current.copy(initialSun);
-    sunLightRef.current.position.copy(initialSun).multiplyScalar(14);
+    getSunDirectionECEF(getCurrentISTDate(), initialSun);
+    initialSunWorld.copy(initialSun).applyQuaternion(earthDisplayRotation);
+    sunDirectionRef.current.copy(initialSunWorld);
+    sunLightRef.current.position.copy(initialSunWorld).multiplyScalar(14);
     sunLightRef.current.target.position.set(0, 0, 0);
     sunLightRef.current.target.updateMatrixWorld();
   }, []);

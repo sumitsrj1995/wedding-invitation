@@ -3,7 +3,6 @@ import { useFrame } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 import { useScrollProgressRef } from '../theme3/scrollProgress';
-import { getCurrentISTDate, getSunDirectionInertial } from './solarPosition';
 import { createMoonSolarMaterial } from './moonSolarMaterial';
 
 const textureBase = `${import.meta.env.BASE_URL}textures/theme5/`;
@@ -17,7 +16,7 @@ export default function Moon({ isMobile = false, reducedMotion = false, sunDirec
   const moonRef = useRef(null);
   const progressRef = useScrollProgressRef();
   const dampedAngle = useRef(0);
-  const sunDirectionUniform = useRef(getSunDirectionInertial(getCurrentISTDate(), new THREE.Vector3()));
+  const sunDirectionUniform = useRef(new THREE.Vector3(1, 0, 0));
 
   const [colorMap] = useTexture([`${textureBase}moon_color.jpg`]);
 
@@ -41,8 +40,6 @@ export default function Moon({ isMobile = false, reducedMotion = false, sunDirec
   useFrame((state, delta) => {
     if (sunDirectionRef?.current) {
       moonMaterial.uniforms.sunDirection.value.copy(sunDirectionRef.current);
-    } else {
-      getSunDirectionInertial(getCurrentISTDate(), moonMaterial.uniforms.sunDirection.value);
     }
 
     if (!orbitRef.current || !moonRef.current || !progressRef) return;

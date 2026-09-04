@@ -55,37 +55,11 @@ export function isIndiaDaytime(date = getCurrentISTDate()) {
   return india.dot(sun) > 0;
 }
 
-/**
- * Authoritative inertial sun direction for scene lights and Moon shading.
- * Same vector as getSunDirectionECEF — Earth center toward the Sun in scene space.
- */
-export function getSunDirectionInertial(date = getCurrentISTDate(), target = new THREE.Vector3()) {
-  return getSunDirectionECEF(date, target);
-}
-
-const inverseEarthRotation = new THREE.Quaternion();
-
-/**
- * Sun direction in Earth model space for custom Earth shaders (local normals).
- * Keeps the terminator aligned with geography while the Earth mesh rotates.
- */
-export function getSunDirectionEarthModel(
-  date,
-  earthQuaternion,
-  target = new THREE.Vector3(),
-  inertialScratch = new THREE.Vector3()
-) {
-  getSunDirectionECEF(date ?? getCurrentISTDate(), inertialScratch);
+/** World-space sun direction for scene lights (accounts for Earth display rotation). */
+export function getSunDirectionWorld(date, earthQuaternion, target = new THREE.Vector3()) {
+  getSunDirectionECEF(date, target);
   if (earthQuaternion) {
-    inverseEarthRotation.copy(earthQuaternion).invert();
-    target.copy(inertialScratch).applyQuaternion(inverseEarthRotation);
-  } else {
-    target.copy(inertialScratch);
+    target.applyQuaternion(earthQuaternion);
   }
   return target;
-}
-
-/** @deprecated Use getSunDirectionInertial for scene lights; use getSunDirectionEarthModel for Earth shaders. */
-export function getSunDirectionWorld(date, earthQuaternion, target = new THREE.Vector3()) {
-  return getSunDirectionInertial(date, target);
 }

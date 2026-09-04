@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
-import { getCurrentISTDate, getSunDirectionEarthModel, getSunDirectionInertial } from './solarPosition';
+import { getCurrentISTDate, getSunDirectionECEF } from './solarPosition';
 
 const textureBase = `${import.meta.env.BASE_URL}textures/theme3/`;
 /** Orient geography so India/Asia faces the default camera (NASA texture seam vs sphere UV). */
@@ -158,8 +158,8 @@ export default function Earth({
 }) {
   const earthGroupRef = useRef(null);
   const cloudsRef = useRef(null);
-  const sunDirectionRef = useRef(getSunDirectionInertial(getCurrentISTDate(), new THREE.Vector3()));
-  const sunInertialRef = useRef(new THREE.Vector3());
+  const sunDirectionRef = useRef(getSunDirectionECEF(getCurrentISTDate(), new THREE.Vector3()));
+  const sunWorldRef = useRef(new THREE.Vector3());
   const segments = isMobile ? 48 : 72;
 
   const [dayMap, nightMap, specularMap, cloudsMap] = useTexture([
@@ -213,13 +213,7 @@ export default function Earth({
   );
 
   const syncSunUniforms = () => {
-    getSunDirectionInertial(getCurrentISTDate(), sunInertialRef.current);
-    getSunDirectionEarthModel(
-      getCurrentISTDate(),
-      earthGroupRef.current?.quaternion,
-      sunDirectionRef.current,
-      sunInertialRef.current
-    );
+    getSunDirectionECEF(getCurrentISTDate(), sunDirectionRef.current);
     earthMaterial.uniforms.sunDirection.value.copy(sunDirectionRef.current);
     cloudMaterial.uniforms.sunDirection.value.copy(sunDirectionRef.current);
     atmosphereMaterial.uniforms.sunDirection.value.copy(sunDirectionRef.current);
@@ -256,8 +250,10 @@ export default function Earth({
 
     syncSunUniforms();
 
-    if (onSunDirectionChange) {
-      onSunDirectionChange(sunInertialRef.current);
+    if (earthGroupRef.current && onSunDirectionChange) {
+      sunWorldRef.current.copy(sunDirectionRef.current);
+      sunWorldRef.current.applyQuaternion(earthGroupRef.current.quaternion);
+      onSunDirectionChange(sunWorldRef.current);
     }
   });
 
