@@ -1,7 +1,11 @@
+import { useUiStrings } from '../context/LanguageContext';
+
 export default function OurStory({ story }) {
+  const ui = useUiStrings();
+
   return (
     <section id="story" className="section-shell">
-      <div className="section-title">Our Story</div>
+      <div className="section-title">{ui.ourStory}</div>
       <div style={{ display: 'grid', gap: '1.25rem', position: 'relative', paddingLeft: '1.2rem' }}>
         <div style={{ position: 'absolute', left: '0.2rem', top: '0.4rem', bottom: '0.4rem', width: '1px', background: 'rgba(184,147,90,0.4)' }} />
         {story.map((item, index) => (

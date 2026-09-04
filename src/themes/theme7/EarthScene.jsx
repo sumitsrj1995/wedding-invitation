@@ -2,18 +2,13 @@ import { Suspense, useLayoutEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { Bloom, DepthOfField, EffectComposer, Vignette } from '@react-three/postprocessing';
 import SpaceEnvironment from './SpaceEnvironment';
-import Earth, { INITIAL_EARTH_Y } from './Earth';
+import Earth from './Earth';
 import Moon from './Moon';
 import Planets from './Planets';
 import ScrollCameraRig from './ScrollCameraRig';
-import { getCurrentISTDate, getSunDirectionECEF } from './solarPosition';
+import { getCurrentISTDate, getSunDirectionInertial } from './solarPosition';
 
 const initialSun = new THREE.Vector3();
-const initialSunWorld = new THREE.Vector3();
-const earthDisplayRotation = new THREE.Quaternion().setFromAxisAngle(
-  new THREE.Vector3(0, 1, 0),
-  INITIAL_EARTH_Y
-);
 
 function ScenePostProcessing({ isMobile = false }) {
   return (
@@ -29,17 +24,19 @@ function ScenePostProcessing({ isMobile = false }) {
 
 export default function EarthScene({ isMobile = false, reducedMotion = false }) {
   const sunLightRef = useRef(null);
+  const sunDirectionRef = useRef(getSunDirectionInertial(getCurrentISTDate(), new THREE.Vector3()));
 
   useLayoutEffect(() => {
     if (!sunLightRef.current) return;
-    getSunDirectionECEF(getCurrentISTDate(), initialSun);
-    initialSunWorld.copy(initialSun).applyQuaternion(earthDisplayRotation);
-    sunLightRef.current.position.copy(initialSunWorld).multiplyScalar(14);
+    getSunDirectionInertial(getCurrentISTDate(), initialSun);
+    sunDirectionRef.current.copy(initialSun);
+    sunLightRef.current.position.copy(initialSun).multiplyScalar(14);
     sunLightRef.current.target.position.set(0, 0, 0);
     sunLightRef.current.target.updateMatrixWorld();
   }, []);
 
   const handleSunDirectionChange = (sunDirection) => {
+    sunDirectionRef.current.copy(sunDirection);
     if (!sunLightRef.current) return;
     sunLightRef.current.position.copy(sunDirection).multiplyScalar(14);
     sunLightRef.current.target.position.set(0, 0, 0);
@@ -77,7 +74,11 @@ export default function EarthScene({ isMobile = false, reducedMotion = false }) 
       </Suspense>
 
       <Suspense fallback={null}>
-        <Moon isMobile={isMobile} reducedMotion={reducedMotion} />
+        <Moon
+          isMobile={isMobile}
+          reducedMotion={reducedMotion}
+          sunDirectionRef={sunDirectionRef}
+        />
       </Suspense>
 
       <Suspense fallback={null}>

@@ -1,9 +1,16 @@
-export const defaultWeddingSlug = 'demo-wedding';
+import { resolveLanguage } from './i18n';
 import photo from '../photos/photo.jpeg';
 import photo2 from '../photos/photo2.jpeg';
 import photo3 from '../photos/photo3.jpeg';
 import photo4 from '../photos/photo4.jpeg';
 import photo_ from '../photos/photo_.jpeg';
+
+export const defaultWeddingSlug = 'demo-wedding';
+
+/** Optional per-wedding UI language, e.g. language: 'mr'. Defaults to English. */
+export function getWeddingLanguage(content) {
+  return resolveLanguage(content?.language);
+}
 export const weddings = {
   'demo-wedding': {
     theme: 'theme1',
@@ -71,40 +78,6 @@ export const weddings = {
       photo2,
       photo3,
       photo4,
-    ]
-  },
-  'sumit-gauri': {
-    theme: 'theme7',
-    eventDateTime: '2026-12-13T16:00:00+05:30',
-    couple: {
-      bride: 'Gauri',
-      groom: 'Sumit',
-      names: 'Sumit & Gauri',
-      date: '13th December 2026',
-      time: '13-12-2026 Sunday · 4:00 PM',
-      location: 'Muktai',
-      city: 'Baramati, Pune',
-      address: 'Muktais Imperial Banquets and Lawns, Baramati, Pune, Maharashtra 413102',
-      mapUrl: 'https://maps.app.goo.gl/C5KhzCHXpF3bWXYy6',
-      brideParents: 'Mrs. Sunita & Mr. Bhagwat Gore Patil',
-      groomParents: 'Mrs. Ujwala & Mr. Ramhari Jagdale'
-    },
-    story: [
-      { title: 'We met', text: 'In the quiet, ordinary way that changes everything, we found each other and discovered a home in the same conversation.' },
-      { title: 'The proposal', text: 'On a golden evening, the question arrived with trembling hands and a promise that would shape the rest of our lives.' },
-      { title: 'The celebration', text: 'We are gathering our favorite people to share a day of laughter, candlelight, and the joy of beginning again together.' }
-    ],
-    schedule: [
-      { time: '3:30 PM', title: 'Haldi' },
-      { time: '5:00 PM', title: 'Saptapadi' },
-      { time: '6:30 PM', title: 'Dinner' }
-    ],
-    gallery: [
-      
-      photo2,
-      photo3,
-      photo4
-      // photo3
     ]
   },
   

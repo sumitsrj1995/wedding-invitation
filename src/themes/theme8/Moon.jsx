@@ -3,6 +3,8 @@ import { useFrame } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 import { useScrollProgressRef } from '../theme3/scrollProgress';
+import { getCurrentISTDate, getSunDirectionInertial } from './solarPosition';
+import { createMoonSolarMaterial } from './moonSolarMaterial';
 
 const textureBase = `${import.meta.env.BASE_URL}textures/theme5/`;
 const EARTH_RADIUS = 1.65;
@@ -10,11 +12,12 @@ const MOON_RADIUS = EARTH_RADIUS * 0.24;
 const ORBIT_RADIUS = 4.05;
 const ORBIT_INCLINE = 0.28;
 
-export default function Moon({ isMobile = false, reducedMotion = false }) {
+export default function Moon({ isMobile = false, reducedMotion = false, sunDirectionRef }) {
   const orbitRef = useRef(null);
   const moonRef = useRef(null);
   const progressRef = useScrollProgressRef();
   const dampedAngle = useRef(0);
+  const sunDirectionUniform = useRef(getSunDirectionInertial(getCurrentISTDate(), new THREE.Vector3()));
 
   const [colorMap] = useTexture([`${textureBase}moon_color.jpg`]);
 
@@ -27,18 +30,21 @@ export default function Moon({ isMobile = false, reducedMotion = false }) {
 
   const moonMaterial = useMemo(
     () =>
-      new THREE.MeshStandardMaterial({
-        map: colorMap,
-        bumpMap: colorMap,
-        bumpScale: isMobile ? 0.008 : 0.012,
-        roughness: 0.94,
-        metalness: 0.015,
-        color: new THREE.Color('#b8b4ae')
+      createMoonSolarMaterial({
+        colorMap,
+        isMobile,
+        sunDirection: sunDirectionUniform.current
       }),
     [colorMap, isMobile]
   );
 
   useFrame((state, delta) => {
+    if (sunDirectionRef?.current) {
+      moonMaterial.uniforms.sunDirection.value.copy(sunDirectionRef.current);
+    } else {
+      getSunDirectionInertial(getCurrentISTDate(), moonMaterial.uniforms.sunDirection.value);
+    }
+
     if (!orbitRef.current || !moonRef.current || !progressRef) return;
 
     const progress = progressRef.current;

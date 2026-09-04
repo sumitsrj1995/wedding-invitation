@@ -3,6 +3,8 @@ import { useFrame } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 import { useScrollProgressRef } from '../theme3/scrollProgress';
+import { getCurrentISTDate, getSunDirectionInertial } from './solarPosition';
+import { createMoonSolarMaterial } from './moonSolarMaterial';
 
 const textureBase = `${import.meta.env.BASE_URL}textures/theme5/`;
 const EARTH_RADIUS = 1.65;
@@ -29,7 +31,7 @@ const cameraForward = new THREE.Vector3();
 const mobileAnchor = new THREE.Vector3();
 const mobileScale = new THREE.Vector3();
 
-export default function Moon({ isMobile = false, reducedMotion = false }) {
+export default function Moon({ isMobile = false, reducedMotion = false, sunDirectionRef }) {
   const desktopLayout = MOON_LAYOUT.desktop;
   const mobileLayout = MOON_LAYOUT.mobile;
 
@@ -39,6 +41,7 @@ export default function Moon({ isMobile = false, reducedMotion = false }) {
   const progressRef = useScrollProgressRef();
   const dampedAngle = useRef(0);
   const mobileRadiusRef = useRef(EARTH_RADIUS * 0.5);
+  const sunDirectionUniform = useRef(getSunDirectionInertial(getCurrentISTDate(), new THREE.Vector3()));
 
   const [colorMap] = useTexture([`${textureBase}moon_color.jpg`]);
 
@@ -51,20 +54,23 @@ export default function Moon({ isMobile = false, reducedMotion = false }) {
 
   const moonMaterial = useMemo(
     () =>
-      new THREE.MeshStandardMaterial({
-        map: colorMap,
-        bumpMap: colorMap,
-        bumpScale: isMobile ? 0.012 : 0.012,
-        roughness: 0.92,
-        metalness: 0.015,
-        color: new THREE.Color(isMobile ? '#c4c0b8' : '#b8b4ae'),
-        emissive: isMobile ? new THREE.Color('#3f3c38') : new THREE.Color('#000000'),
-        emissiveIntensity: isMobile ? 0.16 : 0
+      createMoonSolarMaterial({
+        colorMap,
+        isMobile,
+        sunDirection: sunDirectionUniform.current,
+        emissiveIntensity: isMobile ? 0.16 : 0,
+        emissiveColor: isMobile ? '#3f3c38' : '#000000'
       }),
     [colorMap, isMobile]
   );
 
   useFrame((state, delta) => {
+    if (sunDirectionRef?.current) {
+      moonMaterial.uniforms.sunDirection.value.copy(sunDirectionRef.current);
+    } else {
+      getSunDirectionInertial(getCurrentISTDate(), moonMaterial.uniforms.sunDirection.value);
+    }
+
     if (!moonRef.current || !progressRef) return;
 
     const progress = progressRef.current;

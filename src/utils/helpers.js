@@ -2,7 +2,7 @@ export function formatCountdown(unit, value) {
   return `${value} ${unit}${value === 1 ? '' : 's'}`;
 }
 
-export function createCalendarEvent({ title, description, location, start, end }) {
+export function createCalendarEvent({ title, description, location, start, end, filename = 'wedding-invitation.ics' }) {
   const formatDate = (date) => date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
   const lines = [
     'BEGIN:VCALENDAR',
@@ -20,7 +20,7 @@ export function createCalendarEvent({ title, description, location, start, end }
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
-  link.download = 'wedding-invitation.ics';
+  link.download = filename;
   link.click();
   URL.revokeObjectURL(url);
 }

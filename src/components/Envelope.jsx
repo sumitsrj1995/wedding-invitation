@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import confetti from 'canvas-confetti';
+import { useUiStrings } from '../context/LanguageContext';
 
 export default function Envelope({ children, names, isOpen, onOpen, soundEnabled }) {
+  const ui = useUiStrings();
   const [mounted, setMounted] = useState(false);
   const confettiInstanceRef = useRef(null);
   const confettiCanvasRef = useRef(null);
@@ -172,13 +174,13 @@ export default function Envelope({ children, names, isOpen, onOpen, soundEnabled
       {!isOpen || mounted ? (
         <div
           className={`envelope-shell ${isOpen ? 'open' : ''} ${mounted ? 'mounted' : ''}`}
-          aria-label="Illustrated envelope opening to reveal the invitation"
+          aria-label={ui.envelopeDescription}
         >
           <button
             type="button"
             className="envelope-trigger"
             onClick={handleOpen}
-            aria-label="Open the invitation"
+            aria-label={ui.openInvitation}
           >
             <div className="envelope">
               {/* <div className="envelope-flap" /> */}

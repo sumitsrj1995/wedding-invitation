@@ -1,7 +1,11 @@
+import { useUiStrings } from '../context/LanguageContext';
+
 export default function Schedule({ schedule }) {
+  const ui = useUiStrings();
+
   return (
     <section className="section-shell schedule-section">
-      <div className="section-title">The Day</div>
+      <div className="section-title">{ui.theDay}</div>
       <div className="schedule-timeline">
         {schedule.map((item, index) => (
           <div key={item.title} className="schedule-item">

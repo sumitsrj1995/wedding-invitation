@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
-import { getCurrentISTDate, getSunDirectionECEF } from './solarPosition';
+import { getCurrentISTDate, getSunDirectionEarthModel, getSunDirectionInertial } from './solarPosition';
 import { useScrollProgressRef } from '../theme3/scrollProgress';
 
 const textureBase = `${import.meta.env.BASE_URL}textures/theme3/`;
@@ -161,8 +161,8 @@ export default function Earth({
   const cloudsRef = useRef(null);
   const progressRef = useScrollProgressRef();
   const dampedScrollYaw = useRef(0);
-  const sunDirectionRef = useRef(getSunDirectionECEF(getCurrentISTDate(), new THREE.Vector3()));
-  const sunWorldRef = useRef(new THREE.Vector3());
+  const sunDirectionRef = useRef(getSunDirectionInertial(getCurrentISTDate(), new THREE.Vector3()));
+  const sunInertialRef = useRef(new THREE.Vector3());
   const segments = isMobile ? 48 : 72;
 
   const [dayMap, nightMap, specularMap, cloudsMap] = useTexture([
@@ -216,7 +216,13 @@ export default function Earth({
   );
 
   const syncSunUniforms = () => {
-    getSunDirectionECEF(getCurrentISTDate(), sunDirectionRef.current);
+    getSunDirectionInertial(getCurrentISTDate(), sunInertialRef.current);
+    getSunDirectionEarthModel(
+      getCurrentISTDate(),
+      earthGroupRef.current?.quaternion,
+      sunDirectionRef.current,
+      sunInertialRef.current
+    );
     earthMaterial.uniforms.sunDirection.value.copy(sunDirectionRef.current);
     cloudMaterial.uniforms.sunDirection.value.copy(sunDirectionRef.current);
     atmosphereMaterial.uniforms.sunDirection.value.copy(sunDirectionRef.current);
@@ -268,10 +274,8 @@ export default function Earth({
 
     syncSunUniforms();
 
-    if (earthGroupRef.current && onSunDirectionChange) {
-      sunWorldRef.current.copy(sunDirectionRef.current);
-      sunWorldRef.current.applyQuaternion(earthGroupRef.current.quaternion);
-      onSunDirectionChange(sunWorldRef.current);
+    if (onSunDirectionChange) {
+      onSunDirectionChange(sunInertialRef.current);
     }
   });
 

@@ -9,10 +9,13 @@ import Gallery from './components/Gallery';
 import PresenceMessage from './components/DressCode';
 import Footer from './components/Footer';
 import ThemeProvider from './themes/ThemeProvider';
+import { LanguageProvider, useInvitationCopy, useUiStrings } from './context/LanguageContext';
 import { defaultTheme } from './themes';
-import { defaultWeddingSlug, weddings } from './utils/content';
+import { defaultWeddingSlug, getWeddingLanguage, weddings } from './utils/content';
 
 function WeddingInvitation({ content }) {
+  const ui = useUiStrings();
+  const copy = useInvitationCopy();
   const sectionRefs = useRef([]);
   const [isEnvelopeOpen, setIsEnvelopeOpen] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
@@ -20,7 +23,12 @@ function WeddingInvitation({ content }) {
 
   useEffect(() => {
     document.title = content.couple.names;
-  }, [content]);
+
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) {
+      meta.setAttribute('content', copy.metaDescription);
+    }
+  }, [content, copy.metaDescription]);
 
   const handleEnvelopeOpen = useCallback(() => {
     setIsEnvelopeOpen(true);
@@ -44,7 +52,7 @@ function WeddingInvitation({ content }) {
         className="sound-toggle"
         onClick={() => setSoundEnabled((current) => !current)}
         aria-pressed={soundEnabled}
-        aria-label={soundEnabled ? 'Pause wedding music' : 'Resume wedding music'}
+        aria-label={soundEnabled ? ui.pauseWeddingMusic : ui.resumeWeddingMusic}
       >
         {soundEnabled ? '🔊' : '🔇'}
       </button>
@@ -57,7 +65,11 @@ function WeddingInvitation({ content }) {
         <>
         <br/>
           <div ref={eventDetailsRef} className="content-reveal content-reveal-first">
-            <EventDetails couple={content.couple} eventDateTime={content.eventDateTime} />
+            <EventDetails
+              couple={content.couple}
+              eventDateTime={content.eventDateTime}
+              receptionTime={content.receptionTime}
+            />
           </div>
           <div ref={(node) => (sectionRefs.current[0] = node)} className="content-reveal">
             <Countdown date={content.eventDateTime} />
@@ -86,29 +98,42 @@ function resolveWeddingSlug(routeSlug, pathname) {
   return routeSlug ?? matchedSlug;
 }
 
+function NotFoundInvitation() {
+  const ui = useUiStrings();
+
+  return (
+    <ThemeProvider theme={defaultTheme}>
+      <main className="section-shell" style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', textAlign: 'center' }}>
+        <div className="card" style={{ padding: '2rem', maxWidth: '32rem' }}>
+          <h1 className="text-script" style={{ fontSize: '2.5rem', margin: '0 0 0.75rem' }}>{ui.invitationNotFound}</h1>
+          <p style={{ margin: 0 }}>{ui.invitationNotFoundHint}</p>
+        </div>
+      </main>
+    </ThemeProvider>
+  );
+}
+
 function WeddingRoute() {
   const { slug: routeSlug } = useParams();
   const { pathname } = useLocation();
   const slug = resolveWeddingSlug(routeSlug, pathname);
   const content = slug ? weddings[slug] : undefined;
+  const language = getWeddingLanguage(content);
 
   if (!content) {
     return (
-      <ThemeProvider theme={defaultTheme}>
-        <main className="section-shell" style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', textAlign: 'center' }}>
-          <div className="card" style={{ padding: '2rem', maxWidth: '32rem' }}>
-            <h1 className="text-script" style={{ fontSize: '2.5rem', margin: '0 0 0.75rem' }}>Wedding invitation not found</h1>
-            <p style={{ margin: 0 }}>Please check the invitation link and try again.</p>
-          </div>
-        </main>
-      </ThemeProvider>
+      <LanguageProvider language={language}>
+        <NotFoundInvitation />
+      </LanguageProvider>
     );
   }
 
   return (
-    <ThemeProvider theme={content.theme}>
-      <WeddingInvitation key={slug} content={content} />
-    </ThemeProvider>
+    <LanguageProvider language={language} copyOverrides={content.copy}>
+      <ThemeProvider theme={content.theme}>
+        <WeddingInvitation key={slug} content={content} />
+      </ThemeProvider>
+    </LanguageProvider>
   );
 }
 

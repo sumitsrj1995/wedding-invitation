@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useUiStrings } from '../context/LanguageContext';
 
 const SWIPE_THRESHOLD = 72;
 const MAX_VISIBLE_STACK = 5;
 const RESET_ANIMATION_MS = 460;
 
 export default function Gallery({ images }) {
+  const ui = useUiStrings();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
@@ -133,7 +135,7 @@ export default function Gallery({ images }) {
 
   return (
     <section className="section-shell gallery-section">
-      <div className="section-title">Cherished Memories</div>
+      <div className="section-title">{ui.cherishedMemories}</div>
 
       <div className="gallery-deck-shell">
         {hasCards ? (
@@ -167,7 +169,7 @@ export default function Gallery({ images }) {
                 >
                   <img
                     src={image}
-                    alt={`Wedding gallery image ${cardIndex + 1}`}
+                    alt={ui.galleryImageAlt(cardIndex + 1)}
                     loading="lazy"
                     draggable={false}
                   />
@@ -177,16 +179,16 @@ export default function Gallery({ images }) {
           </div>
         ) : (
           <div className="gallery-deck-complete" aria-live="polite">
-            <span className="text-smallcaps">All moments revealed</span>
+            <span className="text-smallcaps">{ui.allMomentsRevealed}</span>
             <button type="button" className="button gallery-deck-reset" onClick={resetDeck}>
-              Show all photos again
+              {ui.showAllPhotosAgain}
             </button>
           </div>
         )}
 
         {hasCards && remainingCount > 1 ? (
           <p className="gallery-deck-hint text-smallcaps">
-            Swipe up · {remainingCount} photos
+            {ui.gallerySwipeHint(remainingCount)}
           </p>
         ) : null}
       </div>
