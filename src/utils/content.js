@@ -74,10 +74,7 @@ export const weddings = {
     ],
     gallery: [
       photo_,
-      photo,
-      photo2,
-      photo3,
-      photo4,
+      photo
     ]
   },
   
