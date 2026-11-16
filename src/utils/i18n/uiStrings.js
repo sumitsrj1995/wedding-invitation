@@ -40,7 +40,7 @@ export const uiStrings = {
     resumeWeddingMusic: 'Resume wedding music',
     envelopeDescription: 'Illustrated envelope opening to reveal the invitation',
     openInvitation: 'Open the invitation',
-    clickHere: 'Reveal the invitation...',
+    clickHere: 'A special invitation awaits... click here.',
     invitationNotFound: 'Wedding invitation not found',
     invitationNotFoundHint: 'Please check the invitation link and try again.',
     calendarDownloadFilename: 'wedding-invitation.ics',

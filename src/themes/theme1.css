@@ -215,15 +215,17 @@ button, input, select, textarea { font: inherit; }
   gap: 0.7rem;
 }
 .envelope-hint {
-  font-family: 'Jost', Arial, sans-serif;
-  font-style: italic;
-  font-weight: 400;
-  font-size: clamp(1.35rem, 5.8vw, 2.05rem);
+  font-family: 'Cinzel', serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 28px;
   letter-spacing: 0.02em;
   line-height: 1;
-  color: var(--ink);
+  color: #e8D8B8;
   pointer-events: none;
-  white-space: nowrap;
+  max-width: 100%;
+  text-align: center;
+  white-space: normal;
 }
 .envelope-shell.open .envelope-hint {
   opacity: 0;
