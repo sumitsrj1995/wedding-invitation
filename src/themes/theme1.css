@@ -218,7 +218,7 @@ button, input, select, textarea { font: inherit; }
   font-family: 'Cinzel', serif;
   font-style: normal;
   font-weight: 500;
-  font-size: 28px;
+  font-size: clamp(0.8rem, 2.5vw, 1.2rem);
   letter-spacing: 0.02em;
   line-height: 1;
   color: #e8D8B8;
