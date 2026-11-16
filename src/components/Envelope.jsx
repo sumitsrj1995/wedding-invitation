@@ -186,6 +186,7 @@ export default function Envelope({ children, names, isOpen, onOpen, soundEnabled
               {/* <div className="envelope-flap" /> */}
               <div className="envelope-body">
                 <div className="wax-seal">{initials}</div>
+                <span className="envelope-hint">{ui.clickHere}</span>
               </div>
             </div>
           </button>

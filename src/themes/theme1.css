@@ -208,8 +208,25 @@ button, input, select, textarea { font: inherit; }
   inset: 1.4rem 1rem 1rem;
   border: 1px solid rgba(184,147,90,0.3);
   border-radius: 0 0 0.8rem 0.8rem;
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+}
+.envelope-hint {
+  font-family: 'Jost', Arial, sans-serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.35rem, 5.8vw, 2.05rem);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  color: var(--ink);
+  pointer-events: none;
+  white-space: nowrap;
+}
+.envelope-shell.open .envelope-hint {
+  opacity: 0;
 }
 .wax-seal {
   width: clamp(50px, 12vw, 66px);
