@@ -32,9 +32,9 @@ export default function EventDetails({ couple, eventDateTime, receptionTime }) {
         </article>
         <article className="event-card event-reception">
           <div className="text-smallcaps"></div>
-          <h3>{copy.dinnerTitle}</h3>
+          {/* <h3>{copy.dinnerTitle}</h3>
           <p className="event-time">{receptionTime ?? copy.defaultReceptionTime}</p>
-          <p>{copy.dinnerDescription}</p>
+          <p>{copy.dinnerDescription}</p> */}
           <button className="button" onClick={handleCalendar}>{ui.addToCalendar}</button>
         </article>
       </div>
