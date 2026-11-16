@@ -48,7 +48,7 @@ export const weddings = {
   },
     'sumitgauri': {
     theme: 'theme6',
-    eventDateTime: '2026-12-13T16:00:00+05:30',
+    eventDateTime: '2026-12-13T17:14:00+05:30',
     couple: {
       bride: 'Gauri',
       groom: 'Sumit',
@@ -68,8 +68,8 @@ export const weddings = {
       { title: 'The celebration', text: 'We are gathering our favorite people to share a day of laughter, candlelight, and the joy of beginning again together.' }
     ],
     schedule: [
-      { time: '10:00 AM', title: 'Haldi' },
       { time: '9:00 AM', title: 'Engagement' },
+      { time: '10:00 AM', title: 'Haldi' },
       { time: '5:14 PM', title: 'Akshata' }
     ],
     gallery: [
