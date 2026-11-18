@@ -55,10 +55,10 @@ export const weddings = {
       names: 'Sumit & Gauri',
       date: '13th December 2026',
       time: '13-12-2026 Sunday · 5:14 PM',
-      location: 'Muktai',
+      location: 'Muktai Lawns',
       city: 'Baramati, Pune',
       address: 'Muktais Imperial Banquets and Lawns, Baramati, Pune, Maharashtra 413102',
-      mapUrl: 'https://maps.app.goo.gl/C5KhzCHXpF3bWXYy6',
+      mapUrl: 'https://maps.app.goo.gl/MggUAcW2H4qko5yq6',
       brideParents: 'Mrs. Sunita & Mr. Bhagwat Bhanudas Gore Patil',
       groomParents: 'Mrs. Ujwala & Mr. Ramhari Raghoba Jagdale'
     },
