@@ -29,7 +29,7 @@ export default function EventDetails({ couple, eventDateTime, receptionTime }) {
           <p className="event-time">{couple.time}</p>
           <p className="event-location"><strong>{couple.location}</strong><br />{couple.city}<br /><span>{couple.address}</span></p>
           <a href={couple.mapUrl} target="_blank" rel="noreferrer" className="button">{ui.openMap}</a>&nbsp;
-          <button className="button" onClick={handleCalendar}>{ui.addToCalendar}</button>
+          {/* <button className="button" onClick={handleCalendar}>{ui.addToCalendar}</button> */}
         </article>
         {/* <article className="event-card event-reception"> */}
           {/* <div className="text-smallcaps"></div> */}
